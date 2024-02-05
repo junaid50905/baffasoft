@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap');
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #printMe, #printMe * {
+        visibility: visible;
+    }
+    #printMe
+    {
+        overflow: visible !important;
+        float:none !important;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        display:block !important;
+    }
+    #printMe > .container{
+        margin: 0;
+        max-width: 100%;
+    }
+    #printMe {
+        page-break-inside: avoid;
+    }
+}
+.chklist-form{
+    overflow-x: hidden;
+}
+.chklist-form input{
+    padding-left: 10px;
+    font-weight: 600;
+}
+.box1 .d-flex{
+    justify-content: space-between;
+}
+#top-right{
+    font-family: 'Courier Prime', monospace;
+    font-size: 10.6px;
+    font-weight: 600;
+    padding-left: 45.6%;
+}
+.bar-code p{
+    font-size: 10.6px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 10.6px;
+    padding-top: 4%;
+}
+.form-name{
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.3px;
+    font-weight: 600;
+}
+#item-one{
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+}
+.chklist-form .form-control {
+    border:none;
+    border-bottom-style: dashed;
+
+}
+#item-1{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+    width: 49%;
+}
+#item-2{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+}
+#item-3{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+    width: 50%;
+}
+#item-4{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+    width:32%;
+}
+#item-5{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+}
+#item-6{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+}
+#item-7{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+    width: 37%;
+}
+#item-8{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+    width: 24%;
+}
+#item-9{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+}
+#item-10{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 13.3px;
+    font-weight: 600;
+    padding-top: 18px;
+    width: 15%;
+}
+.box2 table{
+    /*width: 54%;*/
+}
+/* .text1{
+    width: 100%;
+} */
+
+.box2 td{
+    text-align: center;
+}
+.box2 .d-flex{
+    justify-content: space-between;
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 11.3px;
+    font-weight: 600;
+}
+.text2 p{
+    padding: 6px 33px;
+    border:1px solid black;
+}
+.text3{
+    border: none;
+    border-top: dashed;
+}
+.box4{
+    border:2px solid black;
+    font-family: 'Zen Antique Soft', serif;
+    font-weight: 600;
+    padding:18px;
+    font-size: 12px;
+}
+input{
+    color: gray;
+}
+.form-row input{
+    color: gray;
+}
+.box4 .text4 input{
+    border: none;
+    border-bottom: dashed;
+    width: 80%;
+}
+input.vs__search {
+    border-bottom: 0px !important;
+    width: auto !important;
+}
+.box4 .text5 input{
+    width:42%;
+    border:none;
+    border-bottom: dashed;
+}
+.box4 .text6 input{
+    width:40%;
+    border:none;
+    border-bottom: dashed;
+}
+.box5 input{
+    border:none;
+    border-bottom: dashed;
+}
+.box6{
+    margin-top: 40px;
+}
+.box6 p{
+    padding:0 40px;
+    border:none;
+    border-top: dashed;
+}
+.text7{
+    font-size: 13.3px;
+    font-weight: 600;
+    font-family: 'Zen Antique Soft', serif;
+}
+.box7 p{
+    width:27%;
+    font-weight: 600;
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 12px;
+}
+.box7 td{
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 12px;
+}
+.box8 p{
+    width:27%;
+    font-weight: 600;
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 12px;
+}
+.box8 td{
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 12px;
+}
+.box9 .text8{
+    font-weight: 600;
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 12px;
+
+}
+.chklist-form .table td{
+    padding: 4px 8px;
+    border:.5px solid gray !important;
+}
+.box9 p{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 14px;
+}
+.text10{
+    font-weight: 600;
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 12px;
+
+}
+.box10 input{
+    border:none;
+    border-bottom: dashed;
+
+}
+.box10 p{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 12px;
+}
+.text11 input{
+    width:40.9%;
+}
+.text12 input{
+    width:28%;
+}
+.text13 input{
+    width:30.7%;
+}
+.text14 input{
+    width:20%;
+}
+.text15 input{
+    width:81.5%;
+}
+.bottom-sign input{
+    border:none;
+    border-bottom: dashed;
+    padding:0;
+}
+.bottom-sign p{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 9.3px;
+    font-weight: normal;
+    padding-top: 8px;
+}
+.text16{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 9.3px;
+    font-weight: normal;
+}
+.text17{
+    font-family: 'Zen Antique Soft', serif;
+    font-size: 5.3px;
+    font-weight: normal;
+}
+/* responsive */
+@media only screen and (max-width: 767px){
+    .box2 .d-flex{
+        flex-direction: column;
+    }
+    .logo img{
+        width:264px;
+    }
+    .box1 .d-flex{
+        flex-direction: column;
+        align-items: center;
+    }
+    .bar-code img{
+        width: 120px;
+    }
+    #top-right{
+        padding-left: 0;
+    }
+}
+@media screen and (min-device-width: 768px) and (max-device-width:1023px){
+    #item-1{
+        width:420px;
+    }
+    #item-4{
+        width:80%;
+    }
+    #item-7{
+        width:96%;
+    }
+    #item-8{
+        width: 60%;
+    }
+
+}
+@media screen and (min-device-width: 1024px) and (max-device-width:1500px){
+    #item-1{
+        width: 330px;
+    }
+    #item-4{
+        width: 44%;
+    }
+    #item-7{
+        width:53%;
+    }
+    #item-8{
+        width: 34%;
+    }
+
+}
+
+/* Dashboard Profile Blade */
+.dash h4{
+    color: blue;
+}

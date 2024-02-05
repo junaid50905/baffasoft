@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap');
+.dash .table-responsive .table {
+    border: 1px solid black;
+}
+.dash .table-responsive .table th, td {
+    border: 1px solid white;
+    font-size: 13px;
+    color: black;
+  }
+.dash .table tr td {
+    border: 2px solid white;
+    font-size: 13px;
+    color: black;
+  }
+.dash .table tbody tr:last-child td {
+    border-width: 1px;
+}
+.dash ul li{
+  list-style: none;
+  font-size: 13px;
+}
+.dash h4{
+  color: #2196F3;
+  font-weight: 100;
+  font-size: 24px;
+  font-family: 'Roboto', sans-serif;
+}
+.dash h5{
+  color: #2196F3;
+  font-weight: 100;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+.dash p{
+  font-weight: 600;
+  font-family: 'Zen Antique Soft', serif;
+  font-size: 13px;
+}
+.p1{
+  background-color: #FCE4EC;
+    padding: 8px 0;
+    border: 1px solid black;
+    color: black;
+}
+.box1{
+  float: right;
+  margin-right: 40px;
+}
+.box1 p{
+  border:1px solid black;
+  text-align: center;
+  padding:5px 18px;
+  margin:0;
+  color: black;
+}
+.p2{
+  background-color: #A5D6A7;
+}
+.p3{
+  background-color: red;
+  color: #fff !important;
+}
+
+.box2{
+  border: 3px solid white;
+  background-color: #EEEEEE;
+}
+
+.box3{
+  border: 3px solid white;
+  background-color: #EEEEEE;
+}
+
+.table-bordered td{
+  background-color: #EEEEEE;
+}
+
+.table-bordered tr{
+  background-color: #EEEEEE;
+}
+
+/* .image{
+  border: 5px solid white;
+  height: 120px;
+  width: 120px;
+} */
+
+.dash{
+  background-color: #EEEEEE;
+}
+
+.image img{
+  height: 150px;
+  width: 150px;
+  border: 5px solid white;
+  margin-top: -350px;
+  margin-left: 84%;
+}
+.box2 p{
+  background-color: #EEEEEE;
+  width:60%;
+}
+.p4{
+  border: 1px solid white;;
+  background-color: #EEEEEE;
+  padding:4px 0;
+  text-align: center;
+}
+.p5{
+  background-color: #FFF8E1;
+  padding:4px 0;
+}
+
+.box4 {
+  border: 3px solid white;
+}
+
+.box4 p{
+  /*background-color: ;*/
+}
+
+.box2 p{
+  background-color: #e1eaea;
+}
+.name{
+  font-weight: bold;
+  background-color: #FBFCFC;
+
+}
+
+.signature{
+  border: 1px solid black;
+  margin-left: 86%;
+  margin-top: -120px;
+  width:100px;
+  height:40px;
+}
+
+p .signature-title{
+  padding-left: 2%;
+  margin-bottom: 3%;
+  font-weight: bold;
+
+}
+
+.sig-title{
+  font-weight: bold;
+  /* background-color: #FBFCFC; */
+}
+
+.add{
+  background-color: #FBFCFC;
+  font-size: 12px;
+}
+
+.location{
+  background-color: #FBFCFC;
+
+}
+
+.card{
+  display: flex;
+  background-color: #BDBEBE;
+  padding: 0;
+}
+
+.card .container .add{
+  color: black;
+}
+
+.card .container span{
+  background-color: #fff;
+  color: darkred;
+  font-weight: bold;
+}
+
+.footer{
+  border: 3px solid white;
+  background-color: #EEEEEE;
+}

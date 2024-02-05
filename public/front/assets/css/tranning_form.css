@@ -1,0 +1,282 @@
+
+/* Cargo Security Awareness TRAINING FORM */
+
+.container{
+    background-color:#FFFFFF;
+    width: fit-content;
+    width: 1000px;
+  }
+
+
+  
+  .boxNew {
+    width: 100%;
+    height: 121px;
+    padding-top: 6px;
+    display: flex;
+  }
+
+  .logoNew img{
+    margin-left: 170%;
+    padding-top: 25px;
+    height: 100px;
+    width: 180px;
+  }
+
+  .headline{
+    margin-top: 0%;
+    margin-left: 24%;
+  }
+  .headline h4{
+    text-transform: capitalize;
+    width: 100%;
+    margin-left: -14%;
+  }
+  .headline h3{
+    margin-left: -3%;
+    margin-top: 1%;
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: 21px;
+  }
+
+ 
+
+  .logoNew p{
+    font-size: 15px;
+    
+  }
+
+  .form-new img{
+    border: 1px solid black;
+    width: 174px;
+    height: 140px;
+    float: left;
+    margin-left: 550px;
+    margin-top: 5%;
+  }
+  
+  .form-new p{
+    margin-top: 30%;
+    text-align: right;
+    margin-right: 10%;
+  }
+
+  .form-new p input{
+    border:2px #808B96;
+    border-bottom-style: dotted;
+    width: 21%;
+  }
+  
+  .renewal-form{
+    align-items: center;
+    margin-top: 0%;
+    padding: 20px;
+  }
+
+  .title h5{
+    margin-top: 4%;
+    margin-left: 45px;
+  }
+
+  /* box1 */
+  .box1{
+    display: inline;
+    flex-direction: row;
+    padding: 6px;
+    
+  }
+
+  .box1 label{
+    margin-left: 4%;
+    margin-top: 1%;
+  }
+
+  .box1 input{
+    border:2px #808B96;
+    border-bottom-style: dotted;
+    width: 71%;
+    margin-bottom: 1%;
+  }
+
+  /* box 2 */
+
+  .box2  {  
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 1%;
+  }
+  .box2  label {
+    margin-left: 4.5%;
+  }
+  
+
+  .box2  input {
+    border:2px #808B96;
+    border-bottom-style: dotted;
+    margin-left: 3%;
+    width: 77%;
+  }
+
+  /* box 3 */
+  
+  .box3  {  
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 1%;
+  }
+  .box3  label {
+    margin-left: 4.5%;
+  }
+  
+
+  .box3  input {
+    border:2px #808B96;
+    border-bottom-style: dotted;
+    margin-left: 3%;
+    width: 67%;
+  }
+
+/* box4 */
+.box4  {  
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 1%;
+    }
+    .box4  label {
+    margin-left: 4.5%;
+    }
+    
+    #address{
+        margin-left: 4.5%;
+        width: 88.5%;
+    }
+    
+    /* .box4  input {
+    border:2px #808B96;
+    border-bottom-style: dotted;
+    width: 71.5%;
+    margin-left: 0.2%;
+    } */
+
+    .box4 input {
+      /* border:2px #808B96; */
+      /* border-bottom-style: dotted; */
+      margin-left: 1%;
+      width: 61%;
+      text-decoration: underline dotted #808B96; 
+      text-decoration-thickness: auto;
+  }
+
+    .box4 span{
+      margin-left: 1.5%;
+      text-decoration: underline;  
+      text-decoration-color: #808B96;
+      font-size:14px;
+      text-decoration-style: dotted;
+      text-underline-offset: 5px;
+      /* text-decoration: 2px underline dotted #808B96; */
+    
+    }
+
+/* box 5 */
+.box5  {  
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 1%;
+    }
+    .box5  label {
+    margin-left: 4.5%;
+    }
+    
+    .mobile{
+    margin-right: 17%;
+    }
+    
+    .box5  input {
+    border:2px #808B96;
+    border-bottom-style: dotted;
+    margin-left: 1%;
+    width: 28%;
+}
+
+/* box 6 */
+
+.box6  {  
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 1%;
+    }
+    .box6  label {
+    margin-left: 4.5%;
+    }
+    
+    .mobile{
+    margin-right: 17%;
+    }
+    
+    .box6  input {
+    border:2px #808B96;
+    border-bottom-style: dotted;
+    margin-left: 1%;
+    width: 22.5%;
+}
+
+/* box 7 */
+
+.box7{
+    margin-top: 12%;
+}
+.box7 p{
+    margin-left: 13%;
+}
+
+.box7 img{
+  /* border: 1px solid black; */
+  height: 50px;
+  width: 80px;
+  margin-left: 30%;
+}
+
+.box8{
+    margin-top: 12%;
+}
+
+.box8 img{
+  /* border: 1px solid black; */
+  height: 50px;
+  width: 80px;
+  margin-left: 50%;
+}
+
+.box8 p{
+    margin-left: 40%;
+}
+
+
+.nbrequired span{
+    margin-left:6.5%;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+  
+  .underline li {
+    margin-left:2.5%;
+    list-style-type: none;
+  }
+
+
+  /************ End  Cargo Security Awareness TRAINING FORM *********************/
+
+
+
+
+
+

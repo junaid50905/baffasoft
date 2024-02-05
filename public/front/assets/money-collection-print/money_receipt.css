@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto:wght@100&display=swap');
+
+
+@font-face {
+    font-family: CourierNew;
+    src: url(../fonts/CourierNew.woff2);
+}
+
+@font-face {
+    font-family: titleFont;
+    src: url(coppg.ttf);
+}
+
+@font-face {
+    font-family: myriad-pro;
+    src: url(myriadpro.otf);
+}
+
+
+
+
+body {
+    width: 21cm;
+    height: 29.7cm;
+    margin: 0 auto;
+    background-image: url(background.png);
+    background-size: cover;
+    /* border: 1px solid #ccc; */
+
+
+}
+
+/* #printMe {
+    background-image: url(/background.png);
+    background-size: cover;
+} */
+
+page {
+    background: white;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+
+page[size="A4"] {
+    width: 21cm;
+    height: 29.7cm;
+}
+
+page[size="A4"][layout="portrait"] {
+    width: 29.7cm;
+    height: 21cm;
+}
+
+@media print {
+
+    body,
+    page {
+        margin: 0;
+        box-shadow: 0;
+    }
+}
+
+.d-flex {
+    display: flex;
+}
+
+.serial {
+    display: flex;
+    float: right;
+}
+
+.box1 {
+    display: block;
+    margin: auto;
+}
+
+.box2 {
+    background-color: #fff3e0;
+    color: #fff3e0;
+    width: 179px;
+    padding: 11px 0;
+    border-bottom: 4px solid #f89c1e;
+}
+
+.logo img {
+    display: block;
+    margin: auto;
+}
+
+.cls1 {
+    font-family: titleFont;
+    font-size: 29px;
+    text-align: center;
+}
+
+.cls2 {
+    font-family: myriad-pro;
+    font-size: 11px;
+}
+
+.cls3 {
+    display: flex;
+    justify-content: end;
+}
+
+.cls5 {
+    background-color: #fb7348;
+    font-weight: bolder;
+    color: #fff;
+    /*height: fit-content;*/
+    padding: 4px 12px;
+    border-radius: 91px;
+    margin-right: 7%;
+    margin-top: 1.2%;
+    font-size: 19px;
+}
+
+.cls6 {
+    display: flex;
+}
+
+.cls7 {
+    display: flex;
+    margin-right: 12px;
+}
+
+.cls7 p {
+    width: 26px;
+    border: 1px solid black;
+    border-top: none;
+    color: #e9e9e9;
+    text-align: center;
+}
+
+.cls8 {
+    display: flex;
+    margin-right: 12px;
+}
+
+.cls8 p {
+    width: 26px;
+    border: 1px solid black;
+    border-top: none;
+    color: #e9e9e9;
+    text-align: center;
+}
+
+.cls9 {
+    display: flex;
+    margin-right: 12px;
+}
+
+.cls9 p {
+    width: 26px;
+    border: 1px solid black;
+    border-top: none;
+    color: #e9e9e9;
+    text-align: center;
+}
+
+.footer-end {
+    background-color: #fb7348;
+    color: #fb7348;
+    height: 30px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1.6px solid black;
+    background-color: #fef5e882;
+}
+
+td {
+    border-right: 2px solid black;
+}
+
+td {
+    padding: 0 0 0 8px;
+}
+
+td hr {
+    height: 1.4px;
+    border-width: 0;
+    color: #d7d1d1;
+    background-color: #d7d1d1;
+    margin-top: 37%;
+}
+
+td .cls10 {
+    font-size: 1.408em;
+    color: #d7d1d1;
+    margin-left: .1%;
+}
+
+.cls11 {
+    padding-left: 0;
+    width: 10.8%;
+}
+
+.cls12 {
+    font-size: 1.407em;
+    color: #d7d1d1;
+    margin-left: .7%;
+}
+
+.cls13 {
+    font-size: 1.407em;
+    color: #d7d1d1;
+    margin-left: 1.35%;
+}
+
+.cls15 td {
+    border: 1.6px solid black;
+    padding: 15px 0 10px 6px;
+}
+
+.cls15 span {
+    font-size: 1.407em;
+    color: #d7d1d1;
+    margin-left: 1.1%;
+}
+
+.row1 td {
+    padding-top: 8px;
+}
+
+.cls11 span {
+    position: absolute;
+    padding-left: 1%;
+}
+
+.cls14 {
+    text-align: right;
+    padding: 3px 6px 10px 6px;
+}
+
+.cls16 {
+    padding: 15px 0 6px 0;
+}
+
+.cls16 span {
+    font-size: 1.407em;
+    color: #d7d1d1;
+}
+
+.cls17 {
+    padding: 0;
+}
+
+.cls17 span {
+    font-size: 1.407em;
+    color: #d7d1d1;
+}
+
+.cls18 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.auth {
+    text-align: center;
+    margin-top: 0;
+}
+
+.chk {
+    font-size: 16px;
+}
+
+.ucr {
+    font-size: 1.407em;
+    color: #d7d1d1;
+    margin-bottom: 6px;
+}
