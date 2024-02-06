@@ -25,6 +25,7 @@ class MemberDetail extends Model
     {
         return $this->belongsTo(Member::class, 'member_id');
     }
+    
     public function savePaymentHistory($money_collections_id){
         $this->update([
             'is_payment' => 1,
