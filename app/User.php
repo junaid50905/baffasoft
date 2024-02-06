@@ -101,6 +101,11 @@ class User extends Authenticatable implements TwoFactorAuthenticatableContract, 
         return $this->belongsTo(Country::class, 'country_id');
     }
 
+    public function userProfile()
+    {
+        return $this->hasOne(UserProfile::class, 'user_id');
+    }
+
     /**
      * Send the password reset notification.
      *

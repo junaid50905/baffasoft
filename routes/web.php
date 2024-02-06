@@ -166,6 +166,13 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
 
         Route::post('two-factor/enable', 'TwoFactorController@enable')->name('user.two-factor.enable');
         Route::post('two-factor/disable', 'TwoFactorController@disable')->name('user.two-factor.disable');
+
+        // user profile update
+        Route::get('update-profile', 'Users\SessionsController@updateProfileShow')
+            ->name('user.update.profile.show')->middleware('session.database');
+        Route::post('update-profile', 'Users\SessionsController@updateProfile')
+            ->name('user.update.profile')->middleware('session.database');
+        
     });
 
     /**
