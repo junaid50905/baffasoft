@@ -175,6 +175,7 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
             ->name('user.update.profile')->middleware('session.database');
         Route::post('multiple-file-uploads', [MultipleImageController::class, 'store'])->name('multiplefile.store')->middleware('session.database');
         Route::get('view-profile', [MultipleImageController::class, 'viewProfile'])->name('view.profile')->middleware('session.database');
+        Route::get('delete-file/{imageId}', [MultipleImageController::class, 'deleteFile'])->name('delete.file')->middleware('session.database');
 
     });
 

@@ -119,6 +119,7 @@
                                             <img src="{{ $ext === 'pdf' ? asset('/public/images/pdf.png') : asset('/storage/uploads/user-profile/'.$image->url) }}" alt="" height="60" width="60" class="rounded-circle" style="object-fit: cover">
                                         </td>
                                         <td>
+                                            <a href="{{ route('delete.file', [$user->id, $image->id]) }}" class="mx-2">Delete</a>
                                             <a href="#" class="mx-2">Download</a>
                                         </td>
                                     </tr>

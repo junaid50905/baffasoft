@@ -239,6 +239,12 @@
                                     <div class="col-lg-12">
                                         <div class="card">
                                             <div class="card-body card-block">
+                                                @include('partials.messages')
+
+                                                @if (Session::has('file_fields_required'))
+                                                    <p class="text-danger">{{ Session('file_fields_required') }}</p>
+                                                @endif
+
                                                 <form action="{{ route('multiplefile.store', $user->id) }}" method="post" enctype="multipart/form-data"
                                                     class="form-horizontal">
                                                 @csrf
@@ -249,13 +255,7 @@
                                                                 <div class="controls">
                                                                     <div class="entry input-group upload-input-group">
                                                                         <input class="form-control" name="name[]" multiple type="text" placeholder="write something">
-                                                                        @error('name')
-                                                                            <p class="text-danger">{{ $message }}</p>
-                                                                        @enderror
-                                                                        <input class="form-control" name="url[]" multiple type="file">
-                                                                        @error('url')
-                                                                            <p class="text-danger">{{ $message }}</p>
-                                                                        @enderror
+                                                                        <input class="form-control" name="url[]" multiple type="file" accept=".jpg,.pdf">
                                                                         <button class="btn btn-upload btn-success btn-add" type="button">
                                                                             <i class="fa fa-plus"></i>
                                                                         </button>
