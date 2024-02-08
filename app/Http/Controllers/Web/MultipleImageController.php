@@ -85,7 +85,8 @@ class MultipleImageController extends Controller
         $filename = VanguardImage::where('id', $imageid)->first()->url;
 
         $file_path = public_path() . '/storage/uploads/user-profile/' . $filename;
+        $downloadedFileName = VanguardImage::where('id', $imageid)->first()->name;
 
-        return response()->download($file_path);
+        return response()->download($file_path, $downloadedFileName);
     }
 }
