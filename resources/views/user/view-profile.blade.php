@@ -120,7 +120,7 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('delete.file', [$user->id, $image->id]) }}" class="mx-2">Delete</a>
-                                            <a href="#" class="mx-2">Download</a>
+                                            <a href="{{ route('download.file', [$user->id, $image->id]) }}" class="mx-2">Download</a>
                                         </td>
                                     </tr>
 
