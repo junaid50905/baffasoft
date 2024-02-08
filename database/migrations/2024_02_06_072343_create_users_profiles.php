@@ -30,7 +30,7 @@ class CreateUsersProfiles extends Migration
             $table->string('place_of_posting')->nullable();
             $table->string('designation')->nullable();
             $table->text('date_of_promotion')->nullable();
-            $table->enum('job_status', ['probation', 'permanent']);
+            $table->enum('job_status', ['probation', 'permanent'])->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

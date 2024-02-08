@@ -83,6 +83,7 @@ class SessionsController extends Controller
     public function updateProfile(Request $request, $user)
     {
         $data = [
+            'user_id' => $user->id,
             'department_id' => $request->department_id,
             'place_of_posting' => $request->place_of_posting,
             'designation' => $request->designation,
@@ -105,7 +106,7 @@ class SessionsController extends Controller
         }else{
             UserProfile::insert($data);
         }
-        
+
         return redirect()->to('admin/users');
 
 

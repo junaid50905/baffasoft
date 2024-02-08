@@ -1,0 +1,28 @@
+.card {
+    margin-top: 0px !important;
+}
+
+.btn-upload {
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+.upload-input-group {
+    margin-bottom: 10px;
+}
+
+.input-group>.custom-select:not(:last-child),
+.input-group>.form-control:not(:last-child) {
+    height: 45px;
+}
+
+.btn-upload {
+    width: 60px !important;
+    height: 40px !important;
+    padding: 0px !important;
+    border-radius: 10% !important;
+    text-align: center !important;
+    line-height: 1.428571;
+    font-size: 20px !important;
+    color: #ffffff !important;
+}

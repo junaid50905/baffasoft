@@ -1,14 +1,17 @@
 body {
-    margin-top:40px;
+    margin-top: 40px;
 }
+
 .badge-success {
     padding: 3px 3px;
     background-color: #5cb85c;
 }
+
 .badge-danger {
     padding: 3px 5px;
     background-color: #d9534f;
 }
+
 .label {
     font-size: 13px;
     margin-left: 10px;
@@ -28,14 +31,17 @@ body {
     background: #f7f7f8;
     border-radius: 5px;
 }
+
 .steps>ul li {
     display: table-cell;
     text-align: center;
     width: 1%;
 }
+
 .steps a {
     color: #337ab7;
 }
+
 .steps>ul li>a:before {
     border-top: 4px solid #c8c7cc;
     content: "";
@@ -48,7 +54,9 @@ body {
     width: 100%;
     z-index: 1;
 }
-.steps li>a.done:before, .steps>ul li>a.selected:before {
+
+.steps li>a.done:before,
+.steps>ul li>a.selected:before {
     border-color: #1e9a73;
 }
 
@@ -61,6 +69,7 @@ body {
     background-color: #1e9a73;
     color: #fff;
 }
+
 .steps>ul .stepNumber {
     background-color: #fff;
     border: 5px solid #c8c7cc;
@@ -75,13 +84,17 @@ body {
     width: 40px;
     z-index: 2;
 }
-.steps li>a.done .stepDesc, .steps>ul li>a.selected .stepDesc {
+
+.steps li>a.done .stepDesc,
+.steps>ul li>a.selected .stepDesc {
     color: #2B3D53;
 }
+
 .steps>ul li:first-child>a:before {
     left: 50%;
     max-width: 51%;
 }
+
 .steps>ul li .stepDesc {
     color: #8e8e93;
     display: block;
@@ -119,6 +132,7 @@ body {
     content: "\f00d";
     margin-right: 8px;
 }
+
 .steps>ul li:last-child>a.selected.error .stepNumber {
     color: #fff;
     background-color: #d43f3a;
@@ -145,7 +159,9 @@ body {
     background-color: #1e9a73;
 }
 
-.btn-green:hover, .btn-green:active, .btn-green:focus {
+.btn-green:hover,
+.btn-green:active,
+.btn-green:focus {
     color: #fff;
     background-color: #1c916c;
 }

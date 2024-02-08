@@ -5,8 +5,7 @@ use Vanguard\Http\Controllers\Web\Member\MembersController;
 //use Vanguard\Http\Controllers\Web\PrintController AS PrintController;
 
 use Vanguard\App\Http\Controllers\Web\Member\CodeController;
-
-
+use Vanguard\Http\Controllers\Web\MultipleImageController;
 
 // Route::get('/code','CodeController@index');
 // Route::get('/create','CodeController@create');
@@ -167,12 +166,16 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
         Route::post('two-factor/enable', 'TwoFactorController@enable')->name('user.two-factor.enable');
         Route::post('two-factor/disable', 'TwoFactorController@disable')->name('user.two-factor.disable');
 
+
+
         // user profile update
         Route::get('update-profile', 'Users\SessionsController@updateProfileShow')
             ->name('user.update.profile.show')->middleware('session.database');
         Route::post('update-profile', 'Users\SessionsController@updateProfile')
             ->name('user.update.profile')->middleware('session.database');
-        
+        Route::post('multiple-file-uploads', [MultipleImageController::class, 'store'])->name('multiplefile.store')->middleware('session.database');
+        Route::get('view-profile', [MultipleImageController::class, 'viewProfile'])->name('view.profile')->middleware('session.database');
+
     });
 
     /**

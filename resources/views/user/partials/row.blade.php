@@ -47,6 +47,11 @@
                     @lang('Update profile')
                 </a>
 
+                <a href="{{ route('view.profile', $user) }}" class="dropdown-item text-gray-500">
+                    <i class="fas fa-user mr-2"></i>
+                    @lang('View profile')
+                </a>
+
                 @canBeImpersonated($user)
                     <a href="{{ route('impersonate', $user) }}" class="dropdown-item text-gray-500 impersonate">
                         <i class="fas fa-user-secret mr-2"></i>
