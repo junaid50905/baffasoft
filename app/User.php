@@ -109,6 +109,10 @@ class User extends Authenticatable implements TwoFactorAuthenticatableContract, 
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    public function salary()
+    {
+        return $this->hasOne(UserSalary::class);
+    }
 
     /**
      * Send the password reset notification.

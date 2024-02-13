@@ -21,7 +21,8 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <hr>
+                    <a href="{{ route('user.update.profile.show', $user) }}" class="btn btn-dark mb-3">Update profile
+                        info</a>
                     <div class="row">
                         <div class="col-md-3">
                             <h5 class="text-muted">Father's Name</h5>
@@ -85,13 +86,13 @@
                             </p>
                         </div>
                     </div>
-                    <a href="{{ route('user.update.profile.show', $user) }}" class="btn btn-dark w-100">Update profile
-                        info</a>
+
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body">
+                    <a href="{{ route('user.update.profile.show', $user) }}" class="btn btn-dark mb-4">+ Add files</a>
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
                             <table class="table">
@@ -105,30 +106,30 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($images as $image)
+                                        @php
+                                            $fileName = $image->url;
+                                            $fileNameParts = explode('.', $fileName);
+                                            $ext = end($fileNameParts);
+                                        @endphp
 
-                                    @php
-                                        $fileName = $image->url;
-                                        $fileNameParts = explode('.', $fileName);
-                                        $ext = end($fileNameParts);
-                                    @endphp
-
-                                    <tr>
-                                        <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $image->name }}</td>
-                                        <td>
-                                            <img src="{{ $ext === 'pdf' ? asset('/public/images/pdf.png') : asset('/storage/uploads/user-profile/'.$image->url) }}" alt="" height="60" width="60" class="rounded-circle" style="object-fit: cover">
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('delete.file', [$user->id, $image->id]) }}" class="mx-2">Delete</a>
-                                            <a href="{{ route('download.file', [$user->id, $image->id]) }}" class="mx-2">Download</a>
-                                        </td>
-                                    </tr>
-
+                                        <tr>
+                                            <th scope="row">{{ $loop->iteration }}</th>
+                                            <td>{{ $image->name }}</td>
+                                            <td>
+                                                <img src="{{ $ext === 'pdf' ? asset('/public/images/pdf.png') : asset('/storage/uploads/user-profile/' . $image->url) }}"
+                                                    alt="" height="60" width="60" class="rounded-circle"
+                                                    style="object-fit: cover">
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('delete.file', [$user->id, $image->id]) }}"
+                                                    class="mx-2">Delete</a>
+                                                <a href="{{ route('download.file', [$user->id, $image->id]) }}"
+                                                    class="mx-2">Download</a>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            <a href="{{ route('user.update.profile.show', $user) }}" class="btn btn-dark w-100">Update user
-                                files</a>
                         </div>
                     </div>
                 </div>

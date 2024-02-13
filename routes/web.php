@@ -5,6 +5,7 @@ use Vanguard\Http\Controllers\Web\Member\MembersController;
 //use Vanguard\Http\Controllers\Web\PrintController AS PrintController;
 
 use Vanguard\App\Http\Controllers\Web\Member\CodeController;
+use Vanguard\Http\Controllers\UserSalaryController;
 use Vanguard\Http\Controllers\Web\MultipleImageController;
 
 // Route::get('/code','CodeController@index');
@@ -178,6 +179,7 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
         Route::get('delete-file/{imageId}', [MultipleImageController::class, 'deleteFile'])->name('delete.file')->middleware('session.database');
         Route::get('download-file/{imageId}', [MultipleImageController::class, 'downloadFile'])->name('download.file')->middleware('session.database');
 
+        Route::post('update-salary', [UserSalaryController::class, 'updateSalary'])->name('salary.update')->middleware('session.database');
     });
 
     /**
