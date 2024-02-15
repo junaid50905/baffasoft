@@ -17,6 +17,10 @@ class CreateSalariesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->integer('basic_salary')->nullable();
+            $table->float('house_rent_in_percent')->nullable();
+            $table->float('medical_allowance_in_percent')->nullable();
+            $table->float('conveyance_in_percent')->nullable();
+            $table->float('provident_fund_in_percent')->nullable();
             $table->integer('house_rent_allowance')->nullable();
             $table->integer('medical_allowance')->nullable();
             $table->integer('conveyance')->nullable();

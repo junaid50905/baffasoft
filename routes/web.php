@@ -180,6 +180,10 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
         Route::get('download-file/{imageId}', [MultipleImageController::class, 'downloadFile'])->name('download.file')->middleware('session.database');
 
         Route::post('update-salary', [UserSalaryController::class, 'updateSalary'])->name('salary.update')->middleware('session.database');
+        Route::get('payable-salary', [UserSalaryController::class, 'showPayableSalary'])->name('payable.salary.show')->middleware('session.database');
+        Route::post('payable-salary', [UserSalaryController::class, 'createPayableSalary'])->name('payable.salary.create')->middleware('session.database');
+        Route::get('insert-salary', [UserSalaryController::class, 'insertSalary'])->name('insert.salary.show')->middleware('session.database');
+        Route::post('paid-salary', [UserSalaryController::class, 'paidSalaryStore'])->name('paid.salary.store')->middleware('session.database');
     });
 
     /**

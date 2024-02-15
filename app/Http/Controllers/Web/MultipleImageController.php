@@ -8,6 +8,7 @@ use Vanguard\Http\Controllers\Controller;
 use Vanguard\Image as VanguardImage;
 use Vanguard\User;
 use Vanguard\UserProfile;
+use Vanguard\UserSalary;
 
 class MultipleImageController extends Controller
 {
@@ -62,8 +63,9 @@ class MultipleImageController extends Controller
     public function viewProfile($user)
     {
         $userProfile = UserProfile::where('user_id', $user->id)->first();
+        $salaryInfo = UserSalary::where('user_id', $user->id)->first();
         $images = $user->images()->get();
-        return view('user.view-profile', compact('userProfile', 'user', 'images'));
+        return view('user.view-profile', compact('userProfile', 'user', 'images', 'salaryInfo'));
     }
 
     // deleteFile
@@ -79,7 +81,7 @@ class MultipleImageController extends Controller
 
         return redirect()->back();
     }
-   
+
 
 
 

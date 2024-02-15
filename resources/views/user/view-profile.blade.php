@@ -90,6 +90,10 @@
                 </div>
             </div>
 
+
+        </div>
+
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <a href="{{ route('user.update.profile.show', $user) }}" class="btn btn-dark mb-4">+ Add files</a>
@@ -133,6 +137,65 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{ route('user.update.profile.show', $user) }}" class="btn btn-dark mb-3">Update Salary
+                        Info</a>
+                    <h5>Gross Salary : {{ $salaryInfo->gross_salary ?? 'Null' }}</h5>
+                    <fieldset class="border p-2 mt-2">
+                        <legend class="w-auto" style="font-size: 18px">Rate of Pay</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5 class="text-muted">Basic Salary</h5>
+                                <p class="text-secondary">{{ $salaryInfo->basic_salary ?? 'Null' }}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="text-muted">House Rent Allowance({{ $salaryInfo->house_rent_in_percent ?? '' }}%)
+                                </h5>
+                                <p class="text-secondary">{{ $salaryInfo->house_rent_allowance ?? 'Null' }}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="text-muted">Medical
+                                    Allowance({{ $salaryInfo->medical_allowance_in_percent ?? "" }}%)</h5>
+                                <p class="text-secondary">{{ $salaryInfo->medical_allowance ?? 'Null' }}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="text-muted">Conveyance({{ $salaryInfo->conveyance_in_percent ?? ""}}%)</h5>
+                                <p class="text-secondary">{{ $salaryInfo->conveyance ?? 'Null' }}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="text-muted">Others</h5>
+                                <p class="text-secondary">{{ $salaryInfo->other_addition ?? 'Null' }}</p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="border p-2 mt-2">
+                        <legend class="w-auto" style="font-size: 18px">Deduction</legend>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h5 class="text-muted">TDS(Tax)</h5>
+                                <p class="text-secondary">{{ $salaryInfo->tds ?? 'Null' }}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="text-muted">Provident Fund({{ $salaryInfo->provident_fund_in_percent ?? "" }}%)
+                                </h5>
+                                <p class="text-secondary">{{ $salaryInfo->provident_fund ?? 'Null' }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <h5 class="text-muted">Others</h5>
+                                <p class="text-secondary">{{ $salaryInfo->other_subtraction ?? 'Null' }}</p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <a href="{{ route('payable.salary.show', $user->id) }}" class="btn btn-primary mt-3"><i class="fas fa-money-bill"></i> Pay salary</a>
+                </div>
+
             </div>
         </div>
     </div>

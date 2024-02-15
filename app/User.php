@@ -113,6 +113,14 @@ class User extends Authenticatable implements TwoFactorAuthenticatableContract, 
     {
         return $this->hasOne(UserSalary::class);
     }
+    public function payableSalary()
+    {
+        return $this->hasOne(PayableSalary::class);
+    }
+    public function employeeSalary()
+    {
+        return $this->hasMany(EmployeeSalary::class);
+    }
 
     /**
      * Send the password reset notification.
