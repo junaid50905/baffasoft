@@ -5,6 +5,7 @@ use Vanguard\Http\Controllers\Web\Member\MembersController;
 //use Vanguard\Http\Controllers\Web\PrintController AS PrintController;
 
 use Vanguard\App\Http\Controllers\Web\Member\CodeController;
+use Vanguard\Http\Controllers\LeaveController;
 use Vanguard\Http\Controllers\UserSalaryController;
 use Vanguard\Http\Controllers\Web\MultipleImageController;
 
@@ -185,6 +186,22 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
         Route::get('insert-salary', [UserSalaryController::class, 'insertSalary'])->name('insert.salary.show')->middleware('session.database');
         Route::post('paid-salary', [UserSalaryController::class, 'paidSalaryStore'])->name('paid.salary.store')->middleware('session.database');
     });
+
+    /**
+    * Leave
+    **/
+    Route::get('/all-leave-applications', [LeaveController::class, 'allApplication'])->name('all.leave.application')->middleware('session.database');
+    Route::get('/my-leave-applications', [LeaveController::class, 'index'])->name('leave.index')->middleware('session.database');
+    Route::get('/my-leave-applications/{approvedDeciledId}', [LeaveController::class, 'viewMyAppliedApplication'])->name('view.my.applied.application')->middleware('session.database');
+    Route::get('/applied-to-me', [LeaveController::class, 'appliedToMe'])->name('leave.applied.to.me')->middleware('session.database');
+    Route::get('/apply-for-leave', [LeaveController::class, 'create'])->name('leave.create')->middleware('session.database');
+    Route::get('/view-applied-application/{applicationId}', [LeaveController::class, 'viewAppliedApplication'])->name('leave.applied.application')->middleware('session.database');
+    Route::post('/view-applied-application/{applicationId}', [LeaveController::class, 'storeAppliedApplication'])->name('store.applied.application')->middleware('session.database');
+    Route::post('/apply-for-leave/{user}', [LeaveController::class, 'store'])->name('leave.store')->middleware('session.database');
+    Route::get('/admin/users/{user}/allocate-leave', [LeaveController::class, 'allocateLeave'])->name('allocate.leave')->middleware('session.database');
+    Route::post('/admin/users/{userId}/allocate-leave', [LeaveController::class, 'allocateLeaveStore'])->name('allocate.leave.store')->middleware('session.database');
+
+
 
     /**
      * Roles & Permissions

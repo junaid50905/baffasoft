@@ -48,7 +48,7 @@
                         <div>
                             <p class="m-0"><b>Employee Name:</b> {{ $name ?? 'Not set yet' }}</p>
                             <p class="m-0"><b>Designation:</b> {{ $designation }}</p>
-                            <p class="m-0"><b>Year & Month:</b> <input type="month" name="paid_year_month"> </p>
+                            <p class="m-0"><b>Year & Month:</b> <input type="month" name="paid_year_month" max="{{ date('Y-m') }}"> </p>
                         </div>
                         <table class="table mt-3">
                             <thead class="thead-dark">
