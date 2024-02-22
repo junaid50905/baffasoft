@@ -22,14 +22,15 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4>Approved Days : {{ $approvedMyLeave->approved_days }}</h4>
-                    <p class="m-1"><b>Casual Leave :</b>{{ $approvedMyLeave->casual_leave }}</p>
-                    <p class="m-1"><b>Sick Leave :</b>{{ $approvedMyLeave->sick_leave }}</p>
-                    <p class="m-1"><b>Annual Leave :</b>{{ $approvedMyLeave->annual_leave }}</p>
-                    <p class="m-1"><b>Maternity Leave :</b>{{ $approvedMyLeave->maternity_leave }}</p>
-                    <p class="m-1"><b>Paternity Leave :</b>{{ $approvedMyLeave->paternity_leave }}</p>
-                    <p class="m-1"><b>Special Leave :</b>{{ $approvedMyLeave->special_leave }}</p>
-                    <p class="m-1"><b>Annual Leave alpecial Leave :</b>{{ $approvedMyLeave->annual_leave_total }}</p>
+                    <h4>Approved Days : {{ $approvedMyLeave->approved_days ?? '' }}</h4>
+                    <p class="m-1"><b>Casual Leave :</b>{{ $approvedMyLeave->casual_leave ?? '' }}</p>
+                    <p class="m-1"><b>Sick Leave :</b>{{ $approvedMyLeave->sick_leave ?? '' }}</p>
+                    <p class="m-1"><b>Annual Leave :</b>{{ $approvedMyLeave->annual_leave ?? '' }}</p>
+                    <p class="m-1"><b>Maternity Leave :</b>{{ $approvedMyLeave->maternity_leave ?? '' }}</p>
+                    <p class="m-1"><b>Paternity Leave :</b>{{ $approvedMyLeave->paternity_leave ?? '' }}</p>
+                    <p class="m-1"><b>Special Leave :</b>{{ $approvedMyLeave->special_leave ?? '' }}</p>
+                    <p class="m-1"><b>Annual Leave alpecial Leave :</b>{{ $approvedMyLeave->annual_leave_total ?? '' }}
+                    </p>
                 </div>
             </div>
         </div>

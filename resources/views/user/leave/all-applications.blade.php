@@ -48,7 +48,15 @@
                                         <td>{{ $application->leave_days }}</td>
                                         <td>{{ $application->leave_type }}</td>
                                         <td>{{ $application->purpose }}</td>
-                                        <td><span class="badge badge-info">{{ $application->status }}</span></td>
+                                        <td>
+                                            @if ($application->status === 'pending')
+                                                <span class="badge badge-info">{{ $application->status }}</span>
+                                            @elseif($application->status === 'approved')
+                                                <span class="badge badge-success">{{ $application->status }}</span>
+                                            @elseif($application->status === 'declined')
+                                                <span class="badge badge-danger">{{ $application->status }}</span>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
 

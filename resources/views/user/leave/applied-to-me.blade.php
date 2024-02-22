@@ -27,7 +27,6 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>User</th>
-                                    <th>Manager</th>
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Leave Days</th>
@@ -42,13 +41,20 @@
                                     <tr>
                                         <td scope="row">{{ $loop->iteration }}</td>
                                         <td>{{ DB::table('users')->where('id', $application->user_id)->first()->first_name }}</td>
-                                        <td>{{ DB::table('users')->where('id', $application->manager_id)->first()->first_name }}</td>
                                         <td>{{ $application->leave_from }}</td>
                                         <td>{{ $application->leave_to }}</td>
                                         <td>{{ $application->leave_days }}</td>
                                         <td>{{ $application->leave_type }}</td>
                                         <td>{{ $application->purpose }}</td>
-                                        <td><span class="badge badge-info">{{ $application->status }}</span></td>
+                                        <td>
+                                            @if ($application->status === 'pending')
+                                                <span class="badge badge-info">{{ $application->status }}</span>
+                                            @elseif($application->status === 'approved')
+                                                <span class="badge badge-success">{{ $application->status }}</span>
+                                            @elseif($application->status === 'declined')
+                                                <span class="badge badge-danger">{{ $application->status }}</span>
+                                            @endif
+                                        </td>
                                         <td><a href="{{ route('leave.applied.application', $application->id) }}" class="btn btn-success btn-sm">View</a></td>
                                     </tr>
                                 @endforeach

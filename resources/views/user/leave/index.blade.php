@@ -46,8 +46,20 @@
                                         <td>{{ $application->leave_days }}</td>
                                         <td>{{ $application->leave_type }}</td>
                                         <td>{{ $application->purpose }}</td>
-                                        <td><span class="badge badge-info">{{ $application->status }}</span></td>
-                                        <td><a href="{{ route('view.my.applied.application', $application->id) }}" class="btn btn-success btn-sm">View</a></td>
+                                        <td>
+                                            @if ($application->status === 'pending')
+                                                <span class="badge badge-info">{{ $application->status }}</span>
+                                            @elseif($application->status === 'approved')
+                                                <span class="badge badge-success">{{ $application->status }}</span>
+                                            @elseif($application->status === 'declined')
+                                                <span class="badge badge-danger">{{ $application->status }}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($application->status !== 'pending')
+                                            <a href="{{ route('view.my.applied.application', $application->id) }}" class="btn btn-success btn-sm">View</a>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
 

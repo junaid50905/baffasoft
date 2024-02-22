@@ -26,7 +26,7 @@ class LeaveController extends Controller
         $request->validate([
             'casual_leave_allowed' => 'required',
             'sick_leave_allowed' => 'required',
-            'annual_leave_allowed'=> 'required',
+            'annual_leave_allowed' => 'required',
             'maternity_leave_allowed' => 'required',
             'paternity_leave_allowed' => 'required'
         ]);
@@ -47,7 +47,7 @@ class LeaveController extends Controller
     public function index()
     {
         $user = auth()->user()->id;
-        $myApplications = LeaveApplication::where('user_id', $user)->get();
+        $myApplications = LeaveApplication::where('user_id', $user)->orderBy('id', 'desc')->get();
         return view('user.leave.index', compact('myApplications'));
     }
     // create
@@ -79,21 +79,33 @@ class LeaveController extends Controller
             'purpose' => 'required',
         ]);
 
+
         $date1 = Carbon::create($request->leave_from);
         $date2 = Carbon::create($request->leave_to);
 
         $leaveDays = $date1->diffInDays($date2) + 1;
 
-        LeaveApplication::insert([
-            'user_id' => $user->id,
-            'manager_id' => $request->manager_id,
-            'leave_type' => $request->leave_type,
-            'leave_from' => $request->leave_from,
-            'leave_to' => $request->leave_to,
-            'leave_days' => $leaveDays,
-            'purpose' => $request->purpose,
-            'status' => 'pending',
-        ]);
+        // $alreadyExists = LeaveApplication::where('user_id', $user->id)
+        //     ->where('leave_from', '=', $date1)
+        //     ->where('leave_to', '>=', $date2)
+        //     ->exists();
+
+        if (LeaveApplication::where('user_id', $user->id)->where(function ($query) use ($date1, $date2) {
+            $query->whereBetween('leave_from', [$date1, $date2])->orWhereBetween('leave_to', [$date1, $date2]);
+        })->exists()) {
+            return redirect()->back()->with('already_leaved', 'You have already been on leave between your leave dates');
+        } else {
+            LeaveApplication::insert([
+                'user_id' => $user->id,
+                'manager_id' => $request->manager_id,
+                'leave_type' => $request->leave_type,
+                'leave_from' => $request->leave_from,
+                'leave_to' => $request->leave_to,
+                'leave_days' => $leaveDays,
+                'purpose' => $request->purpose,
+                'status' => 'pending',
+            ]);
+        }
 
         return redirect()->route('leave.index');
     }
@@ -107,7 +119,7 @@ class LeaveController extends Controller
     public function appliedToMe()
     {
         $authUser = auth()->user()->id;
-        $appliedToMe = LeaveApplication::where('manager_id', $authUser)->get();
+        $appliedToMe = LeaveApplication::where('manager_id', $authUser)->orderby('id', 'desc')->get();
 
 
         return view('user.leave.applied-to-me', compact('appliedToMe'));
