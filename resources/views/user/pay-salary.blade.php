@@ -1,5 +1,9 @@
-@extends('layouts.app')
+@php
+    use Carbon\Carbon;
+@endphp
 
+
+@extends('layouts.app')
 
 @section('page-title', __('Pay salary'))
 @section('page-heading', __('Pay salary'))
@@ -15,40 +19,86 @@
     @include('partials.messages')
 
     @php
+        // user info ////////////////////////////////////////////////////
         $name = $user->first_name . ' ' . $user->last_name;
+        $designation = $userProfile->designation ?? "not set";
 
-        $designation = $userProfile->designation ?? 'Not set yet';
-
-        $basic_salary = $rateOfPay->basic_salary ?? 'Not set yet';
-        $hr = $rateOfPay->house_rent_allowance ?? 'Not set yet';
-        $medical = $rateOfPay->medical_allowance ?? 'Not set yet';
-        $conveyance = $rateOfPay->conveyance ?? 'Not set yet';
-        $other_addition = $rateOfPay->other_addition ?? 'Not set yet';
-
-        $tds = $rateOfPay->tds ?? 'Not set yet';
-        $pf = $rateOfPay->provident_fund ?? 'Not set yet';
-        $other_subtraction = $rateOfPay->other_subtraction ?? 'Not set yet';
-
+        // rate of payable salary and deduction /////////////////////////
+        // rate of pay
+        $basic_salary = $rateOfPay->basic_salary ?? 0;
+        $hr = $rateOfPay->house_rent_allowance ?? 0;
+        $medical = $rateOfPay->medical_allowance ?? 0;
+        $conveyance = $rateOfPay->conveyance ?? 0;
+        $other_addition = $rateOfPay->other_addition ?? 0;
+        // rate of deduction
+        $tds = $rateOfPay->tds ?? 0;
+        $pf = $rateOfPay->provident_fund ?? 0;
+        $other_subtraction = $rateOfPay->other_subtraction ?? 0;
+        // total payable salaray
         $totalSalary = $basic_salary + $hr + $medical + $conveyance + $other_addition;
         $totalPayable = $totalSalary;
 
-        $totalDeduction = $tds + $other_subtraction + $pf;
-        $totalDeductionAfterChange = $totalDeduction;
 
-        $netPayment = $totalPayable - $totalDeductionAfterChange;
+        //
+        $totalDeduction = $tds + $other_subtraction + $pf;
+
+
+
+        $lateDeductionFeePerDay = intval($basic_salary / 30);
+
+
+        // after showing month wise attendance
+        $lateCount = Session('lateCount');
+        $month = Session('month');
+        $absentCount = Session('absentCount') ?? 0;
+
+        if ($month) {
+            $date = Carbon::createFromFormat('M-y', $month);
+            $formattedDate = $date->format('Y-m');
+        }
+
+        //
+        $lateDays = intval($lateCount / 3);
+
+        // total late days
+        $totalLateDays = $lateDays + $absentCount;
+
+        // total late deduciton
+        $totalLateAbsentDeduction = $totalLateDays * $lateDeductionFeePerDay;
+
+        // finialSubtraction
+        $finialDeductionAfterChange = $totalDeduction + $totalLateAbsentDeduction;
+
+        // netPayment
+        $netPayment = $totalPayable -$finialDeductionAfterChange;
+
+
     @endphp
 
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    @if (!$lateCount)
+                    <div class="m-0"><b>Year & Month:</b>
+                        <form action="{{ route('user.monthly.attendance', $user->id) }}" method="POST">
+                            @csrf
+                            <input type="month" name="year_month" max="{{ date('Y-m') }}">
+                            <button type="submit" class="btn btn-sm btn-dark">Show late and absent</button>
+                        </form>
+                    </div>
+                    @endif
                     <form action="{{ route('payable.salary.create', $user->id) }}" method="POST">
                         @csrf
+                        {{-- user id --}}
                         <input type="text" value="{{ $user->id }}" name="user_id" hidden>
+                        <input type="text" value="{{ $lateDays }}" name="late" hidden>
+                        <input type="text" value="{{ $absentCount }}" name="absent" hidden>
+                        {{-- Employee --}}
                         <div>
                             <p class="m-0"><b>Employee Name:</b> {{ $name ?? 'Not set yet' }}</p>
-                            <p class="m-0"><b>Designation:</b> {{ $designation }}</p>
-                            <p class="m-0"><b>Year & Month:</b> <input type="month" name="paid_year_month" max="{{ date('Y-m') }}"> </p>
+                            <p class="m-0"><b>Designation:</b> {{ $designation ?? 'Not set yet' }}</p>
+                            <p class="m-0"><b>Year & Month:</b> <input type="month" name="paid_year_month" value="{{ $formattedDate ?? '' }}"> </p>
                         </div>
                         <table class="table mt-3">
                             <thead class="thead-dark">
@@ -93,7 +143,7 @@
                                     <td>Other</td>
                                     <td>{{ $other_subtraction }}</td>
                                     <td>Other</td>
-                                    <td><input type="text" value="{{ $other_subtraction }}" name="other_subtraction">
+                                    <td><input type="text" value="{{ $totalLateAbsentDeduction }}" name="other_subtraction">
                                     </td>
                                 </tr>
                                 <tr>
@@ -125,7 +175,7 @@
                                 <td><b>Total Deduction</b></td>
                                 <td>{{ $totalDeduction }}</td>
                                 <td><b>Total Deduction after change</b></td>
-                                <td>{{ $totalDeductionAfterChange }}</td>
+                                <td>{{ $finialDeductionAfterChange ?? 0 }}</td>
                             </tfoot>
                         </table> <br>
 
@@ -134,24 +184,14 @@
 
                         <div class="row">
                             <div class="col-md-5 py-2">
-                                <div class="d-flex justify-content-between">
-                                    <label>Total absent</label>
-                                    <div>
-                                        <input type="text" placeholder="Total absent days"
-                                            title="120 taka will be deducted for per absent" name="absent" required> × 120
-                                        Tk
-                                    </div>
+                                <div>
+                                    <p class="m-0">Total Late: {{ $lateDays }}</p>
+                                    <p class="m-0">Total absent: {{ $absentCount }}</p>
+                                    <p class="m-0">Total Deduction: {{ $totalLateAbsentDeduction }}</p>
                                 </div> <br>
-                                <div class="d-flex justify-content-between">
-                                    <label>Total Late Hour</label>
-                                    <div>
-                                        <input type="text" placeholder="Total late hours"
-                                            title="15 taka will be deducted for per late hour" name="late" required> × 15
-                                        Tk
-                                    </div>
-                                </div>
                                 <div class="d-flex mt-2">
-                                    <button class="btn btn-info" type="submit" value="calculate" name="payment_status">Calculate Net Payment</button>
+                                    <button class="btn btn-info" type="submit" value="calculate"
+                                        name="payment_status">Calculate Net Payment</button>
                                 </div>
                             </div>
                             <div class="col-md-7 py-2 text-right">
@@ -159,9 +199,7 @@
                                     <p class="m-1"><b>Total payable :</b> <input type="text"
                                             value="{{ $totalSalary }}" disabled></p>
                                     <p class="m-1"><b>Total deduction after change :</b> ( - )<input type="text"
-                                            value="{{ $totalDeduction }}" disabled></p>
-                                    <p class="m-1"><b>Total absent deduction :</b> ( - ) <input type="text" disabled></p>
-                                    <p class="m-1"><b>Total late deduction :</b> ( - )<input type="text" disabled></p>
+                                            value="{{ $finialDeductionAfterChange }}" disabled></p>
                                     <hr>
                                     <p class="m-1"><b>Net payment :</b> <input type="text"
                                             value="{{ $netPayment }}" disabled></p>

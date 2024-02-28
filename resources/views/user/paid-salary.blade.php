@@ -19,43 +19,43 @@
 
         $designation = $user->userProfile->designation ?? 'Null';
 
-        $basic_salary = $salary->basic_salary ?? 'Null';
-        $hr = $salary->house_rent_allowance ?? 'Null';
-        $medical = $salary->medical_allowance ?? 'Null';
+        $basic_salary = $salary->basic_salary ?? 0;
+        $hr = $salary->house_rent_allowance ?? 0;
+        $medical = $salary->medical_allowance ?? 0;
         $conveyance = $salary->conveyance ?? 'Null';
-        $other_addition = $salary->other_addition ?? 'Null';
+        $other_addition = $salary->other_addition ?? 0;
         $totalSalary = $basic_salary + $hr + $medical + $conveyance + $other_addition;
 
-        $tds = $salary->tds ?? 'Null';
-        $pf = $salary->provident_fund ?? 'Null';
-        $other_subtraction = $salary->other_subtraction ?? 'Null';
+        $tds = $salary->tds ?? 0;
+        $pf = $salary->provident_fund ?? 0;
+        $other_subtraction = $salary->other_subtraction ?? 0;
         $totalDeduction = $tds + $pf + $other_subtraction;
 
         // after change
         $year_month = $afterChangeSalary->paid_year_month ?? 'Null';
-        $basic = $afterChangeSalary->basic_salary ?? 'Null';
-        $house_rent = $afterChangeSalary->house_rent ?? 'Null';
-        $medical_allowance = $afterChangeSalary->medical ?? 'Null';
-        $conveyance_fee = $afterChangeSalary->conveyance ?? 'Null';
-        $other_add = $afterChangeSalary->other_addition ?? 'Null';
+        $basic = $afterChangeSalary->basic_salary ?? 0;
+        $house_rent = $afterChangeSalary->house_rent ?? 0;
+        $medical_allowance = $afterChangeSalary->medical ?? 0;
+        $conveyance_fee = $afterChangeSalary->conveyance ?? 0;
+        $other_add = $afterChangeSalary->other_addition ?? 0;
         $totalPayable = $basic + $house_rent + $medical_allowance + $conveyance_fee + $other_add;
 
-        $tds_fee = $afterChangeSalary->tds ?? 'Null';
-        $provident_fund = $afterChangeSalary->provident_fund ?? 'Null';
-        $other_sub = $afterChangeSalary->other_subtraction ?? 'Null';
+        $tds_fee = $afterChangeSalary->tds ?? 0;
+        $provident_fund = $afterChangeSalary->provident_fund ?? 0;
+        $other_sub = $afterChangeSalary->other_subtraction ?? 0;
         $totalDeductionAfterChange = $tds_fee + $provident_fund + $other_sub;
 
-        $absent = $afterChangeSalary->absent ?? 'Null';
-        $late = $afterChangeSalary->late ?? 'Null';
-        $totalAbsentDeduction = $afterChangeSalary->absent_deduction ?? 'Null';
-        $totalLateDeduction = $afterChangeSalary->late_deduction ?? 'Null';
+        $absent = $afterChangeSalary->absent ?? 0;
+        $late = $afterChangeSalary->late ?? 0;
+        $totalAbsentDeduction = $afterChangeSalary->absent_deduction ?? 0;
+        $totalLateDeduction = $afterChangeSalary->late_deduction ?? 0;
 
 
         $netPayment = $totalPayable - $totalDeductionAfterChange - $totalAbsentDeduction - $totalLateDeduction;
 
         // send the data when click the back button to change the net payment
 
-        
+
 
 
     @endphp
@@ -160,24 +160,6 @@
 
                         <div class="row">
                             <div class="col-md-5 py-2">
-                                <div class="d-flex justify-content-between">
-                                    <label>Total absent</label>
-                                    <div>
-                                        <input type="text" placeholder="Total absent days"
-                                            title="120 taka will be deducted for per absent" value="{{ $absent }}"
-                                            name="absent" required> × 120
-                                        Tk
-                                    </div>
-                                </div> <br>
-                                <div class="d-flex justify-content-between">
-                                    <label>Total Late Hour</label>
-                                    <div>
-                                        <input type="text" placeholder="Total late hours"
-                                            title="15 taka will be deducted for per late hour" value="{{ $late }}"
-                                            name="late" required> × 15
-                                        Tk
-                                    </div>
-                                </div>
                                 <div class="d-flex mt-2">
                                     <button onclick="changeFormAction(this.value)" class="btn btn-info" type="submit" name="payment_status" value="calculate">Calculate net payment</button>
                                 </div>
@@ -188,9 +170,6 @@
                                     </p>
                                     <p class="m-1"><b>Total deduction after change :</b> ( - )<input type="text"
                                             value="{{ $totalDeductionAfterChange }}" name="total_deduction_after_change"></p>
-                                    <p class="m-1"><b>Total absent deduction :</b> ( - ) <input type="text" value="{{ $totalAbsentDeduction }}" name="absent_deduction">
-                                    </p>
-                                    <p class="m-1"><b>Total late deduction :</b> ( - )<input type="text" value="{{ $totalLateDeduction }}" name="late_deduction"></p>
                                     <hr>
                                     <p class="m-1"><b>Net payment :</b> <input type="text" value="{{ $netPayment }}" name="net_payment">
                                     </p>

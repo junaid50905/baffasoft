@@ -23,6 +23,7 @@
 
 
 
+    <link rel="stylesheet" href="cdn.datatables.net/2.0.0/css/dataTables.dataTables.min.css">
     <link type="text/css" rel="stylesheet" href="{{ url('assets/css/user-profile.css') }}">
     <link media="all" type="text/css" rel="stylesheet" href="{{ url('assets/css/vendor.css') }}">
     <link media="all" type="text/css" rel="stylesheet" href="{{ url('assets/css/app.css') }}">

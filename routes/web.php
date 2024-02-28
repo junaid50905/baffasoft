@@ -5,6 +5,7 @@ use Vanguard\Http\Controllers\Web\Member\MembersController;
 //use Vanguard\Http\Controllers\Web\PrintController AS PrintController;
 
 use Vanguard\App\Http\Controllers\Web\Member\CodeController;
+use Vanguard\Http\Controllers\AttendanceController;
 use Vanguard\Http\Controllers\LeaveController;
 use Vanguard\Http\Controllers\UserSalaryController;
 use Vanguard\Http\Controllers\Web\MultipleImageController;
@@ -24,9 +25,9 @@ Route::get('register', 'Member\RegisterController@show');
 Route::post('register', 'Member\RegisterController@register');
 
 Route::get('mems', function () {
-//    return  URL::to('/');
-//    return  asset('');
-//    return  url('');
+    //    return  URL::to('/');
+    //    return  asset('');
+    //    return  url('');
     return \Illuminate\Support\Str::random(60);
     return base_path();
     //    return \Vanguard\Member::all();
@@ -44,7 +45,6 @@ Route::prefix('member-details')->name('member-details.')->group(function () {
     Route::put('edit/{memberDetail}', [MemberDetailsController::class, 'update'])->name('update');
     Route::delete('{memberDetail}', [MemberDetailsController::class, 'destroy'])->name('delete');
     Route::post('{member}/change_pass', [MemberDetailsController::class, 'change_pass'])->name('change_pass');
-
 });
 
 Route::get('admin/login', 'Auth\LoginController@show');
@@ -188,8 +188,8 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
     });
 
     /**
-    * Leave
-    **/
+     * Leave
+     **/
     Route::get('/all-leave-applications', [LeaveController::class, 'allApplication'])->name('all.leave.application')->middleware('session.database');
     Route::get('/my-leave-applications', [LeaveController::class, 'index'])->name('leave.index')->middleware('session.database');
     Route::get('/my-leave-applications/{approvedDeciledId}', [LeaveController::class, 'viewMyAppliedApplication'])->name('view.my.applied.application')->middleware('session.database');
@@ -202,6 +202,16 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
     Route::post('/admin/users/{userId}/allocate-leave', [LeaveController::class, 'allocateLeaveStore'])->name('allocate.leave.store')->middleware('session.database');
 
 
+
+    /**
+     * Attendance
+     **/
+    Route::prefix('admin/attendance')->group(function () {
+        Route::get('/upload-csv', [AttendanceController::class, 'uploadCSV'])->name('upload.csv')->middleware('session.database');
+        Route::post('/upload-csv', [AttendanceController::class, 'CSVStore'])->name('upload.csv.store')->middleware('session.database');
+        Route::get('/attendance', [AttendanceController::class, 'attendanceIndex'])->name('attendance.index')->middleware('session.database');
+        Route::post('/show-user-monthly-attendance/{userId}', [AttendanceController::class, 'showUserMonthlyAttendance'])->name('user.monthly.attendance')->middleware('session.database');
+    });
 
     /**
      * Roles & Permissions
@@ -307,7 +317,7 @@ Route::get('member/', 'Member\MembersController@index')->name('member.dashboard'
 
 Route::get('guard', function () {
     if (Auth::guard('front')->check())
-//        return Auth::guard('front')->user();
+        //        return Auth::guard('front')->user();
         return auth()->guard('front')->user();
     elseif (Auth::guard('web')->check())   // OR Auth::check()
         return Auth::guard('web')->user();  // OR // auth()->user();
@@ -315,7 +325,7 @@ Route::get('guard', function () {
         return 'Not Login';
 });
 
-Route::middleware('auth')->get('/test_auth', function(Request $request) {
+Route::middleware('auth')->get('/test_auth', function (Request $request) {
     return $request->user();
 });
 
@@ -340,19 +350,19 @@ Route::controller(PrintController::class)->group(function () {
 
 Route::get('/admin/{any}', function ($any) {        // For Admin
     return view('vue.admin');
-//        return View::make('vue.admin');
+    //        return View::make('vue.admin');
 })->where('any', '.*')->middleware('auth:web');
 Route::get('/election/{any}', function ($any) {        // For Admin
     return view('vue.election');
-//        return View::make('vue.admin');
+    //        return View::make('vue.admin');
 })->where('any', '.*')->middleware('auth:web');
 Route::get('/members/{any}', function ($any) {      // For Registration
     return view('vue.index');
 })->where('any', '.*');
 //Route::group(['middleware' => ['auth']], function () {
-    Route::get('/member/{any}', function ($any) {       // For Member
-        return view('vue.member');
-    })->where('any', '.*')->middleware('auth:front');
+Route::get('/member/{any}', function ($any) {       // For Member
+    return view('vue.member');
+})->where('any', '.*')->middleware('auth:front');
 //});
 Route::get('/vue/{any}', function ($any) {          // For Practice
     return view('vue.index');
@@ -360,5 +370,3 @@ Route::get('/vue/{any}', function ($any) {          // For Practice
 Route::get('/print/{any}', function ($any) {        // For Print
     return view('vue.print');
 })->where('any', '.*')->middleware('auth:web');
-
-

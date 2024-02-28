@@ -134,11 +134,17 @@ class LeaveController extends Controller
     // storeAppliedApplication
     public function storeAppliedApplication(Request $request, $applicationId)
     {
-        // dd($request->all());
-        // // approved_decline_leaves
-        // DB::table('approved_decline_leaves')->insert([
-        //     'leave_application_id ' => $request->leave_application_id,
-        //     'user_id  ' => $request->user_id,
+        $dates = $request->input('date');
+        $leaveTypes = $request->input('leave_type');
+        $data = array_combine($dates, $leaveTypes);
+
+
+
+        // ////////////////////////////////////////////////
+        // $approved_days = $request->casual_leave + $request->sick_leave + $request->annual_leave + $request->maternity_leave + $request->paternity_leave + $request->special_leave + $request->annual_leave_total;
+        // ApprovedDeclinedLeave::insert([
+        //     'leave_application_id' => $request->leave_application_id,
+        //     'user_id' => $request->user_id,
         //     'casual_leave' => $request->casual_leave,
         //     'sick_leave' => $request->sick_leave,
         //     'annual_leave' => $request->annual_leave,
@@ -146,65 +152,53 @@ class LeaveController extends Controller
         //     'paternity_leave' => $request->paternity_leave,
         //     'special_leave' => $request->special_leave,
         //     'annual_leave_total' => $request->annual_leave_total,
+        //     'approved_days' => $approved_days,
         //     'status' => $request->status,
         // ]);
-        $approved_days = $request->casual_leave + $request->sick_leave + $request->annual_leave + $request->maternity_leave + $request->paternity_leave + $request->special_leave + $request->annual_leave_total;
-        ApprovedDeclinedLeave::insert([
-            'leave_application_id' => $request->leave_application_id,
-            'user_id' => $request->user_id,
-            'casual_leave' => $request->casual_leave,
-            'sick_leave' => $request->sick_leave,
-            'annual_leave' => $request->annual_leave,
-            'maternity_leave' => $request->maternity_leave,
-            'paternity_leave' => $request->paternity_leave,
-            'special_leave' => $request->special_leave,
-            'annual_leave_total' => $request->annual_leave_total,
-            'approved_days' => $approved_days,
-            'status' => $request->status,
-        ]);
 
-        // leave_applications
-        LeaveApplication::where('id', $applicationId)->update([
-            'status' => $request->status
-        ]);
+        // // leave_applications
+        // LeaveApplication::where('id', $applicationId)->update([
+        //     'status' => $request->status
+        // ]);
 
-        // leave_allocations
-        $leaveAllowcation = LeaveAllocation::where('user_id', $request->user_id)->first();
+        // // leave_allocations
+        // $leaveAllowcation = LeaveAllocation::where('user_id', $request->user_id)->first();
 
-        $enjoyed_cl = $leaveAllowcation->casual_leave_enjoyed;
-        $enjoyed_sl = $leaveAllowcation->sick_leave_enjoyed;
-        $enjoyed_al = $leaveAllowcation->annual_leave_enjoyed;
-        $enjoyed_ml = $leaveAllowcation->maternity_leave_enjoyed;
-        $enjoyed_pl = $leaveAllowcation->paternity_leave_enjoyed;
-        $enjoyed_alt = $leaveAllowcation->annual_leave_total_enjoyed;
-        $enjoyed_spl = $leaveAllowcation->special_leave_enjoyed;
+        // $enjoyed_cl = $leaveAllowcation->casual_leave_enjoyed;
+        // $enjoyed_sl = $leaveAllowcation->sick_leave_enjoyed;
+        // $enjoyed_al = $leaveAllowcation->annual_leave_enjoyed;
+        // $enjoyed_ml = $leaveAllowcation->maternity_leave_enjoyed;
+        // $enjoyed_pl = $leaveAllowcation->paternity_leave_enjoyed;
+        // $enjoyed_alt = $leaveAllowcation->annual_leave_total_enjoyed;
+        // $enjoyed_spl = $leaveAllowcation->special_leave_enjoyed;
 
-        $balance_cl = $leaveAllowcation->casual_leave_balance;
-        $balance_sl = $leaveAllowcation->sick_leave_balance;
-        $balance_al = $leaveAllowcation->annual_leave_balance;
-        $balance_ml = $leaveAllowcation->maternity_leave_balance;
-        $balance_pl = $leaveAllowcation->paternity_leave_balance;
-        $balance_alt = $leaveAllowcation->annual_leave_total_balance;
+        // $balance_cl = $leaveAllowcation->casual_leave_balance;
+        // $balance_sl = $leaveAllowcation->sick_leave_balance;
+        // $balance_al = $leaveAllowcation->annual_leave_balance;
+        // $balance_ml = $leaveAllowcation->maternity_leave_balance;
+        // $balance_pl = $leaveAllowcation->paternity_leave_balance;
+        // $balance_alt = $leaveAllowcation->annual_leave_total_balance;
 
 
-        LeaveAllocation::where('user_id', $request->user_id)->update([
+        // LeaveAllocation::where('user_id', $request->user_id)->update([
 
-            'casual_leave_enjoyed' => $enjoyed_cl + $request->casual_leave,
-            'sick_leave_enjoyed' => $enjoyed_sl + $request->sick_leave,
-            'annual_leave_enjoyed' => $enjoyed_al + $request->annual_leave,
-            'maternity_leave_enjoyed' => $enjoyed_ml + $request->maternity_leave,
-            'paternity_leave_enjoyed' => $enjoyed_pl + $request->paternity_leave,
-            'annual_leave_total_enjoyed' => $enjoyed_alt + $request->annual_leave_total,
-            'special_leave_enjoyed' => $enjoyed_spl + $request->special_leave,
+        //     'casual_leave_enjoyed' => $enjoyed_cl + $request->casual_leave,
+        //     'sick_leave_enjoyed' => $enjoyed_sl + $request->sick_leave,
+        //     'annual_leave_enjoyed' => $enjoyed_al + $request->annual_leave,
+        //     'maternity_leave_enjoyed' => $enjoyed_ml + $request->maternity_leave,
+        //     'paternity_leave_enjoyed' => $enjoyed_pl + $request->paternity_leave,
+        //     'annual_leave_total_enjoyed' => $enjoyed_alt + $request->annual_leave_total,
+        //     'special_leave_enjoyed' => $enjoyed_spl + $request->special_leave,
 
-            'casual_leave_balance' => $balance_cl - $request->casual_leave,
-            'sick_leave_balance' => $balance_sl - $request->sick_leave,
-            'annual_leave_balance' => $balance_al - $request->annual_leave,
-            'maternity_leave_balance' => $balance_ml - $request->maternity_leave,
-            'paternity_leave_balance' => $balance_pl - $request->paternity_leave,
-            'annual_leave_total_balance' => $balance_alt - $request->annual_leave_total,
+        //     'casual_leave_balance' => $balance_cl - $request->casual_leave,
+        //     'sick_leave_balance' => $balance_sl - $request->sick_leave,
+        //     'annual_leave_balance' => $balance_al - $request->annual_leave,
+        //     'maternity_leave_balance' => $balance_ml - $request->maternity_leave,
+        //     'paternity_leave_balance' => $balance_pl - $request->paternity_leave,
+        //     'annual_leave_total_balance' => $balance_alt - $request->annual_leave_total,
 
-        ]);
+        // ]);
+        // ///////////////////////////////
 
         return redirect()->route('leave.applied.to.me');
     }

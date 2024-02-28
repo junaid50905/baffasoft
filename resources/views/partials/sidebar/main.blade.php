@@ -61,6 +61,29 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#attendance" data-toggle="collapse"
+                   aria-expanded="false">
+                    <i class="fas fa-list-ul"></i>
+                    <span>Attendance</span>
+                </a>
+                <ul class="list-unstyled sub-menu collapse" id="attendance">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('upload.csv') }}">
+                            <span>Upload attendance file</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('attendance.index') }}">
+                            <span>View attendance</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
             @foreach (\Vanguard\Plugins\Vanguard::availablePlugins() as $plugin)
                 @include('partials.sidebar.items', ['item' => $plugin->sidebar()])
             @endforeach

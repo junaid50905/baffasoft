@@ -43,8 +43,9 @@
         "laravel/tinker": "^2.6",
         "laravel/ui": "^3.3",
         "laravelcollective/html": "^6.2",
+        "league/csv": "9.0",
         "maatwebsite/excel": "^3.1",
-        "milon/barcode": "^10.0",
+        "milon/barcode": "^8.0",
         "predis/predis": "^1.1",
         "proengsoft/laravel-jsvalidation": "^4.0.0",
         "spatie/laravel-medialibrary": "^9.0.0",
@@ -53,8 +54,7 @@
         "vanguardapp/activity-log": "^3.1",
         "vanguardapp/announcements": "^3.0",
         "vanguardapp/plugins": "^3.0.0",
-        "webpatser/laravel-countries": "dev-master",
-        "milon/barcode": "^8.0"
+        "webpatser/laravel-countries": "dev-master"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "3.5.*",

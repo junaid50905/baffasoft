@@ -40,7 +40,8 @@
                             <span>PL = Paternity Leave ,</span>
                             <span>ALT = Annual Leave Leave ,</span>
                         </div>
-                        <form action="{{ route('store.applied.application', $application->id) }}" method="POST">
+
+                        <form action="" method="POST">
                             @csrf
                             <input type="text" hidden name="leave_application_id" value="{{ $application->id }}">
                             <input type="text" hidden name="user_id" value="{{ $application->user_id }}">
@@ -94,47 +95,96 @@
                                     name="status">Decline</button>
                             @endif
                         </form>
+
+                        <form action="{{ route('store.applied.application', $application->id) }}" method="POST">
+                            @csrf
+                            <div class="row my-2">
+                                <div class="col-md-6">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Leave Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (range(1, $application->leave_days) as $day)
+                                                <tr>
+                                                    <td>
+                                                        @php
+                                                            $date = \Carbon\Carbon::createFromFormat('Y-m-d', $application->leave_from)
+                                                                ->addDays($day - 1)
+                                                                ->format('Y-m-d');
+                                                        @endphp
+                                                        <input type="text" name="date[]" value="{{ $date }}" disabled>
+                                                    </td>
+                                                    <td>
+                                                        <select name="leave_type[]">
+                                                            <option value="decline">Decline</option>
+                                                            <option value="Casual Leave">Casual Leave</option>
+                                                            <option value="Sick Leave">Sick Leave</option>
+                                                            <option value="Annual Leave">Annual Leave</option>
+                                                            <option value="Paternity Leave">Paternity Leave</option>
+                                                            <option value="Maternity Leave">Maternity Leave</option>
+                                                            <option value="Special Leave">Special Leave</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <button class="btn btn-success btn-sm" type="submit">Save</button>
+                        </form>
                     </div>
 
                     @if ($application->status === 'approved')
-                    <div class="border p-2 m-2">
-                        @php
-                            $approvedInfo = DB::table('approved_decline_leaves')
-                                ->where('leave_application_id', $application->id)
-                                ->first();
-                        @endphp
-                        <p><b>Leave Approved:</b> {{ $approvedInfo->approved_days }}</p>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>CL</label>
-                                <input type="text" value="{{ $approvedInfo->casual_leave ?? '' }}" class="w-50" disabled>
-                            </div>
-                            <div class="col-md-2">
-                                <label>SL</label>
-                                <input type="text" value="{{ $approvedInfo->sick_leave ?? '' }}" class="w-50" disabled>
-                            </div>
-                            <div class="col-md-2">
-                                <label>AL</label>
-                                <input type="text" value="{{ $approvedInfo->annual_leave ?? '' }}" class="w-50" disabled>
-                            </div>
-                            <div class="col-md-2">
-                                <label>ML</label>
-                                <input type="text" value="{{ $approvedInfo->maternity_leave ?? '' }}" class="w-50" disabled>
-                            </div>
-                            <div class="col-md-2">
-                                <label>PL</label>
-                                <input type="text" value="{{ $approvedInfo->paternity_leave ?? '' }}" class="w-50" disabled>
-                            </div>
-                            <div class="col-md-2">
-                                <label>ALT</label>
-                                <input type="text" value="{{ $approvedInfo->annual_leave_total ?? '' }}" class="w-50" disabled>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Special Leave</label>
-                                <input type="text" value="{{ $approvedInfo->special_leave ?? '' }}" class="w-50" disabled>
+                        <div class="border p-2 m-2">
+                            @php
+                                $approvedInfo = DB::table('approved_decline_leaves')
+                                    ->where('leave_application_id', $application->id)
+                                    ->first();
+                            @endphp
+                            <p><b>Leave Approved:</b> {{ $approvedInfo->approved_days }}</p>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>CL</label>
+                                    <input type="text" value="{{ $approvedInfo->casual_leave ?? '' }}" class="w-50"
+                                        disabled>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>SL</label>
+                                    <input type="text" value="{{ $approvedInfo->sick_leave ?? '' }}" class="w-50"
+                                        disabled>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>AL</label>
+                                    <input type="text" value="{{ $approvedInfo->annual_leave ?? '' }}" class="w-50"
+                                        disabled>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>ML</label>
+                                    <input type="text" value="{{ $approvedInfo->maternity_leave ?? '' }}" class="w-50"
+                                        disabled>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>PL</label>
+                                    <input type="text" value="{{ $approvedInfo->paternity_leave ?? '' }}"
+                                        class="w-50" disabled>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>ALT</label>
+                                    <input type="text" value="{{ $approvedInfo->annual_leave_total ?? '' }}"
+                                        class="w-50" disabled>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Special Leave</label>
+                                    <input type="text" value="{{ $approvedInfo->special_leave ?? '' }}"
+                                        class="w-50" disabled>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endif
 
                 </div>

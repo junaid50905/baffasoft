@@ -11,6 +11,9 @@ class UserSalaryController extends Controller
 {
 
     // salary update
+    /**
+     * From profile update, throughout this function, salary will be set for a user(employee)
+     */
     public function updateSalary(Request $request, $user)
     {
         $request->validate([
@@ -75,23 +78,25 @@ class UserSalaryController extends Controller
     }
 
     // createPayableSalary
+    /**
+     * This function will work after click the calculate net payment button.
+     */
     public function createPayableSalary(Request $request, $user)
     {
-        $request->validate([
-            'basic_salary' => 'required',
-            'house_rent' => 'required',
-            'medical' => 'required',
-            'conveyance' => 'required',
-            'other_addition' => 'required',
-            'provident_fund' => 'required',
-            'tds' => 'required',
-            'other_subtraction' => 'required',
-            'absent' => 'required',
-            'late' => 'required',
-            'paid_year_month' => 'required',
-            'payment_status' => 'required',
-        ]);
-
+        // $request->validate([
+        //     'basic_salary' => 'required',
+        //     'house_rent' => 'required',
+        //     'medical' => 'required',
+        //     'conveyance' => 'required',
+        //     'other_addition' => 'required',
+        //     'provident_fund' => 'required',
+        //     'tds' => 'required',
+        //     'other_subtraction' => 'required',
+        //     'absent' => 'required',
+        //     'late' => 'required',
+        //     'paid_year_month' => 'required',
+        //     'payment_status' => 'required',
+        // ]);
         $basic_salary = $request->basic_salary;
         $house_rent = $request->house_rent;
         $medical = $request->medical;
@@ -108,10 +113,8 @@ class UserSalaryController extends Controller
         $totalPayable = $basic_salary + $house_rent + $medical + $conveyance + $other_addition;
         $totalDeductionAfterChange = $tds + $provident_fund + $other_subtraction;
 
-        $lateDeduction = $late * 15;
-        $absentDeduction = $absent * 120;
 
-        $netPayment = $totalPayable - $totalDeductionAfterChange - $lateDeduction - $absentDeduction;
+        $netPayment = $totalPayable - $totalDeductionAfterChange;
 
         $data = [
             'user_id' => $user->id,
@@ -127,12 +130,8 @@ class UserSalaryController extends Controller
             'late' => $late,
             'paid_year_month' => $paid_year_month,
             'payment_status' => $payment_status,
-
             'total_payable' => $totalPayable,
             'total_deduction_after_change' => $totalDeductionAfterChange,
-            'late_deduction' => $lateDeduction,
-            'absent_deduction' => $absentDeduction,
-
             'net_payment' => $netPayment,
         ];
 
@@ -159,25 +158,23 @@ class UserSalaryController extends Controller
     // paidSalaryStore
     public function paidSalaryStore(Request $request, $user)
     {
-        $request->validate([
-            'basic_salary' => 'required',
-            'house_rent' => 'required',
-            'medical' => 'required',
-            'conveyance' => 'required',
-            'other_addition' => 'required',
-            'provident_fund' => 'required',
-            'tds' => 'required',
-            'other_subtraction' => 'required',
-            'absent' => 'required',
-            'late' => 'required',
-            'absent_deduction' => 'required',
-            'late_deduction' => 'required',
-            'payment_status' => 'required',
-            'total_payable' => 'required',
-            'total_deduction_after_change' => 'required',
-            'net_payment' => 'required',
-            'paid_year_month' => 'required',
-        ]);
+        // $request->validate([
+        //     'basic_salary' => 'required',
+        //     'house_rent' => 'required',
+        //     'medical' => 'required',
+        //     'conveyance' => 'required',
+        //     'other_addition' => 'required',
+        //     'provident_fund' => 'required',
+        //     'tds' => 'required',
+        //     'other_subtraction' => 'required',
+        //     'absent_deduction' => 'required',
+        //     'late_deduction' => 'required',
+        //     'payment_status' => 'required',
+        //     'total_payable' => 'required',
+        //     'total_deduction_after_change' => 'required',
+        //     'net_payment' => 'required',
+        //     'paid_year_month' => 'required',
+        // ]);
 
         EmployeeSalary::insert([
             'user_id' => $request->user_id,
