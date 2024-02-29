@@ -5,6 +5,7 @@ use Vanguard\Http\Controllers\Web\Member\MembersController;
 //use Vanguard\Http\Controllers\Web\PrintController AS PrintController;
 
 use Vanguard\App\Http\Controllers\Web\Member\CodeController;
+use Vanguard\Attendance;
 use Vanguard\Http\Controllers\AttendanceController;
 use Vanguard\Http\Controllers\LeaveController;
 use Vanguard\Http\Controllers\UserSalaryController;
@@ -185,6 +186,17 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
         Route::post('payable-salary', [UserSalaryController::class, 'createPayableSalary'])->name('payable.salary.create')->middleware('session.database');
         Route::get('insert-salary', [UserSalaryController::class, 'insertSalary'])->name('insert.salary.show')->middleware('session.database');
         Route::post('paid-salary', [UserSalaryController::class, 'paidSalaryStore'])->name('paid.salary.store')->middleware('session.database');
+
+        //////////////////////
+        Route::get('/monthly-attendance', [AttendanceController::class, 'monthlyAttendance'])->name('monthly.attendance')->middleware('session.database');
+
+        /// user salary history
+        Route::get('salary-history', [UserSalaryController::class, 'userSalaryHistory'])->name('user.salary.history')->middleware('session.database');
+        Route::get('salary-history/update-salary/{salaryId}', [UserSalaryController::class, 'userUpdateSalary'])->name('user.update.salary')->middleware('session.database');
+        Route::post('salary-history/update-salary/{salaryId}', [UserSalaryController::class, 'userUpdateSalaryStore'])->name('user.update.salary.store')->middleware('session.database');
+
+
+
     });
 
     /**
@@ -210,6 +222,8 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
         Route::get('/upload-csv', [AttendanceController::class, 'uploadCSV'])->name('upload.csv')->middleware('session.database');
         Route::post('/upload-csv', [AttendanceController::class, 'CSVStore'])->name('upload.csv.store')->middleware('session.database');
         Route::get('/attendance', [AttendanceController::class, 'attendanceIndex'])->name('attendance.index')->middleware('session.database');
+
+        ////////////
         Route::post('/show-user-monthly-attendance/{userId}', [AttendanceController::class, 'showUserMonthlyAttendance'])->name('user.monthly.attendance')->middleware('session.database');
     });
 

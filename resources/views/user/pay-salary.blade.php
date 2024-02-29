@@ -21,7 +21,7 @@
     @php
         // user info ////////////////////////////////////////////////////
         $name = $user->first_name . ' ' . $user->last_name;
-        $designation = $userProfile->designation ?? "not set";
+        $designation = $userProfile->designation ?? 'not set';
 
         // rate of payable salary and deduction /////////////////////////
         // rate of pay
@@ -38,24 +38,21 @@
         $totalSalary = $basic_salary + $hr + $medical + $conveyance + $other_addition;
         $totalPayable = $totalSalary;
 
-
         //
         $totalDeduction = $tds + $other_subtraction + $pf;
 
-
-
         $lateDeductionFeePerDay = intval($basic_salary / 30);
 
+        // // after showing month wise attendance
+        $lateCount = $lateCount;
+        $formattedDate = $formattedDate;
+        $absentCount = $absentCount;
 
-        // after showing month wise attendance
-        $lateCount = Session('lateCount');
-        $month = Session('month');
-        $absentCount = Session('absentCount') ?? 0;
+        // Parse the date string using Carbon
+        $date = Carbon::createFromFormat('M-y', $formattedDate);
 
-        if ($month) {
-            $date = Carbon::createFromFormat('M-y', $month);
-            $formattedDate = $date->format('Y-m');
-        }
+        // Format the date as 'Y-m' (year-month)
+        $dateForInvoic = $date->format('Y-m');
 
         //
         $lateDays = intval($lateCount / 3);
@@ -70,8 +67,7 @@
         $finialDeductionAfterChange = $totalDeduction + $totalLateAbsentDeduction;
 
         // netPayment
-        $netPayment = $totalPayable -$finialDeductionAfterChange;
-
+        $netPayment = $totalPayable - $finialDeductionAfterChange;
 
     @endphp
 
@@ -79,26 +75,17 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    @if (!$lateCount)
-                    <div class="m-0"><b>Year & Month:</b>
-                        <form action="{{ route('user.monthly.attendance', $user->id) }}" method="POST">
-                            @csrf
-                            <input type="month" name="year_month" max="{{ date('Y-m') }}">
-                            <button type="submit" class="btn btn-sm btn-dark">Show late and absent</button>
-                        </form>
-                    </div>
-                    @endif
                     <form action="{{ route('payable.salary.create', $user->id) }}" method="POST">
                         @csrf
                         {{-- user id --}}
                         <input type="text" value="{{ $user->id }}" name="user_id" hidden>
                         <input type="text" value="{{ $lateDays }}" name="late" hidden>
                         <input type="text" value="{{ $absentCount }}" name="absent" hidden>
-                        {{-- Employee --}}
                         <div>
                             <p class="m-0"><b>Employee Name:</b> {{ $name ?? 'Not set yet' }}</p>
                             <p class="m-0"><b>Designation:</b> {{ $designation ?? 'Not set yet' }}</p>
-                            <p class="m-0"><b>Year & Month:</b> <input type="month" name="paid_year_month" value="{{ $formattedDate ?? '' }}"> </p>
+                            <p class="m-0"><b>Year & Month:</b> <input type="month" name="paid_year_month"
+                                    value="{{ $dateForInvoic }}" readonly> </p>
                         </div>
                         <table class="table mt-3">
                             <thead class="thead-dark">
@@ -143,7 +130,8 @@
                                     <td>Other</td>
                                     <td>{{ $other_subtraction }}</td>
                                     <td>Other</td>
-                                    <td><input type="text" value="{{ $totalLateAbsentDeduction }}" name="other_subtraction">
+                                    <td><input type="text" value="{{ $totalLateAbsentDeduction }}"
+                                            name="other_subtraction">
                                     </td>
                                 </tr>
                                 <tr>

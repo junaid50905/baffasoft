@@ -26,8 +26,7 @@ class CreateEmployeesSalariesTable extends Migration
             $table->integer('other_subtraction')->nullable();
             $table->integer('absent')->nullable();
             $table->integer('late')->nullable();
-            $table->integer('late_deduction')->nullable();
-            $table->integer('absent_deduction')->nullable();
+            $table->integer('late_absent_deduction')->nullable();
             $table->integer('total_payable')->nullable();
             $table->integer('total_deduction_after_change')->nullable();
             $table->integer('net_payment')->nullable();

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 use Vanguard\Attendance;
 use Carbon\Carbon;
+use Vanguard\EmployeeSalary;
+use Vanguard\User;
 
 class AttendanceController extends Controller
 {
@@ -45,20 +47,36 @@ class AttendanceController extends Controller
     {
         return view('attendance.attendance-index');
     }
+
+
     // showUserMonthlyAttendance
     public function showUserMonthlyAttendance(Request $request, $userId)
     {
-        $date = Carbon::createFromFormat('Y-m', $request->year_month);
-        $formattedDate = $date->format('M-y');
-
-        $lateCount = Attendance::where('date', 'like', '%'.$formattedDate)->where('user_id', $userId)->where('late', '>', '0:00')->count();
-        $absentCount = Attendance::where('date', 'like', '%' . $formattedDate)->where('user_id', $userId)->where('absent', 'TRUE')->where('week', '!=', 'Fri')->count();
-
-        
-        return redirect()->back()->with([
-            'lateCount'=> $lateCount,
-            'month' => $formattedDate,
-            'absentCount'=> $absentCount
+        $request->validate([
+            'year_month' => 'required'
         ]);
+        if (EmployeeSalary::where('user_id', $userId)->where('paid_year_month', $request->year_month)->first()) {
+            return redirect()->back()->with('already_paid', 'Salary has been paid for ' . $request->year_month);
+        } else {
+            $date = Carbon::createFromFormat('Y-m', $request->year_month);
+            $formattedDate = $date->format('M-y');
+
+            $lateCount = Attendance::where('date', 'like', '%' . $formattedDate)->where('user_id', $userId)->where('late', '>', '0:00')->count();
+            $absentCount = Attendance::where('date', 'like', '%' . $formattedDate)->where('user_id', $userId)->where('absent', 'TRUE')->where('week', '!=', 'Fri')->count();
+
+            $user = User::where('id', $userId)->first();
+            $rateOfPay = $user->salary;
+            $afterChangeSalary = $user->payableSalary;
+
+
+            return view('user.pay-salary', compact('lateCount', 'formattedDate', 'absentCount', 'user', 'rateOfPay', 'afterChangeSalary'));
+        }
+
+    }
+
+    // monthlyAttendance
+    public function monthlyAttendance($user)
+    {
+        return view('user.show-attendance-late', compact('user'));
     }
 }

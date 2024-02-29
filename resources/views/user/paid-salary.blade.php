@@ -50,13 +50,9 @@
         $totalAbsentDeduction = $afterChangeSalary->absent_deduction ?? 0;
         $totalLateDeduction = $afterChangeSalary->late_deduction ?? 0;
 
-
         $netPayment = $totalPayable - $totalDeductionAfterChange - $totalAbsentDeduction - $totalLateDeduction;
 
         // send the data when click the back button to change the net payment
-
-
-
 
     @endphp
 
@@ -161,22 +157,27 @@
                         <div class="row">
                             <div class="col-md-5 py-2">
                                 <div class="d-flex mt-2">
-                                    <button onclick="changeFormAction(this.value)" class="btn btn-info" type="submit" name="payment_status" value="calculate">Calculate net payment</button>
+                                    <button onclick="changeFormAction(this.value)" class="btn btn-info" type="submit"
+                                        name="payment_status" value="calculate">Calculate net payment</button>
                                 </div>
                             </div>
                             <div class="col-md-7 py-2 text-right">
                                 <div>
-                                    <p class="m-1"><b>Total payable :</b> <input type="text" value="{{ $totalPayable }}" name="total_payable">
+                                    <p class="m-1"><b>Total payable :</b> <input type="text"
+                                            value="{{ $totalPayable }}" name="total_payable" readonly>
                                     </p>
                                     <p class="m-1"><b>Total deduction after change :</b> ( - )<input type="text"
-                                            value="{{ $totalDeductionAfterChange }}" name="total_deduction_after_change"></p>
+                                            value="{{ $totalDeductionAfterChange }}" name="total_deduction_after_change" readonly>
+                                    </p>
                                     <hr>
-                                    <p class="m-1"><b>Net payment :</b> <input type="text" value="{{ $netPayment }}" name="net_payment">
+                                    <p class="m-1"><b>Net payment :</b> <input type="text"
+                                            value="{{ $netPayment }}" name="net_payment" readonly>
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <button onclick="changeFormAction(this.value)" class="btn btn-success float-right" type="submit" name="payment_status" value="paid">Save</button>
+                        <button onclick="changeFormAction(this.value)" class="btn btn-success float-right" type="submit"
+                            name="payment_status" value="paid">Save</button>
                     </form>
                 </div>
             </div>
@@ -189,16 +190,16 @@
 
 @section('scripts')
 
-<script>
-    function changeFormAction(buttonValue) {
-        var form = document.getElementById('payment-form');
-        if (buttonValue === 'calculate') {
-            form.action = "{{ route('payable.salary.create', $user->id) }}";
-        } else if (buttonValue === 'paid') {
-            form.action = "{{ route('paid.salary.store', $user->id) }}";
+    <script>
+        function changeFormAction(buttonValue) {
+            var form = document.getElementById('payment-form');
+            if (buttonValue === 'calculate') {
+                form.action = "{{ route('payable.salary.create', $user->id) }}";
+            } else if (buttonValue === 'paid') {
+                form.action = "{{ route('paid.salary.store', $user->id) }}";
+            }
         }
-    }
-</script>
+    </script>
 
     {!! HTML::script('assets/js/as/btn.js') !!}
     {!! HTML::script('assets/js/as/profile.js') !!}

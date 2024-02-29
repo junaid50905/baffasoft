@@ -193,7 +193,7 @@
                         </div>
                     </fieldset>
 
-                    <a href="{{ route('payable.salary.show', $user->id) }}" class="btn btn-primary mt-3"><i class="fas fa-money-bill"></i> Pay salary</a>
+                    <a href="{{ route('monthly.attendance', $user->id) }}" class="btn btn-primary mt-3"><i class="fas fa-money-bill"></i>Pay salary</a>
                 </div>
 
             </div>
