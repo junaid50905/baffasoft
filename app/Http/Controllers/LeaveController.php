@@ -9,6 +9,7 @@ use Vanguard\User;
 use Carbon\Carbon;
 use DB;
 use Vanguard\ApprovedDeclinedLeave;
+use Vanguard\LeaveApprove;
 
 class LeaveController extends Controller
 {
@@ -128,15 +129,126 @@ class LeaveController extends Controller
     public function viewAppliedApplication($applicationId)
     {
         $application = LeaveApplication::where('id', $applicationId)->first();
-
-        return view('user.leave.view-applied-application', compact('application'));
+        
+        $userId = $application->user_id;
+        $leaveAllowcation = LeaveAllocation::where('user_id', $userId)->first();
+        return view('user.leave.view-applied-application', compact('application', 'leaveAllowcation'));
     }
     // storeAppliedApplication
     public function storeAppliedApplication(Request $request, $applicationId)
     {
+
+        //////////
+        $userId = LeaveApplication::where('id', $applicationId)->first()->user_id;
+
+        //// allocated leave
+        $leaveAllowcation = LeaveAllocation::where('user_id', $userId)->first();
+
+        // allowed leave
+        $casualAllowed = $leaveAllowcation->casual_leave_allowed;
+        $sickAllowed = $leaveAllowcation->sick_leave_allowed;
+        $annualAllowed = $leaveAllowcation->annual_leave_allowed;
+        $maternityAllowed = $leaveAllowcation->maternity_leave_allowed;
+        $paternityAllowed = $leaveAllowcation->paternity_leave_allowed;
+        $annualLeaveTotal = $leaveAllowcation->annual_leave_total;
+
+        // enjoyed laeave
+        $casualEnjoyed = $leaveAllowcation->casual_leave_enjoyed;
+        $sickEnjoyed = $leaveAllowcation->sick_leave_enjoyed;
+        $annualEnjoyed = $leaveAllowcation->annual_leave_enjoyed;
+        $maternityEnjoyed = $leaveAllowcation->maternity_leave_enjoyed;
+        $paternityEnjoyed = $leaveAllowcation->paternity_leave_enjoyed;
+        $annualLeaveTotalEnjoyed = $leaveAllowcation->annual_leave_total_enjoyed;
+        $specialEnjoyed = $leaveAllowcation->special_leave_enjoyed;
+
+        //////////
         $dates = $request->input('date');
         $leaveTypes = $request->input('leave_type');
-        $data = array_combine($dates, $leaveTypes);
+        $dates = array_combine($dates, $leaveTypes);
+
+        $applicationStatus = $request->input('application_status');
+
+        $decline = 0;
+        $cl = 0;
+        $sl = 0;
+        $al = 0;
+        $pl = 0;
+        $ml = 0;
+        $spl = 0;
+        $atl = 0;
+
+        if ($applicationStatus === 'approved') {
+            foreach ($dates as $date => $type) {
+                $leaveApprove = new LeaveApprove();
+                // Set the attributes for the LeaveApprove instance
+                $leaveApprove->leave_application_id = $applicationId;
+                $leaveApprove->user_id = $userId;
+                $leaveApprove->date = $date;
+                $leaveApprove->leave_type = $type;
+                // Save the LeaveApprove instance
+                $leaveApprove->save();                
+
+                switch ($type) {
+                    case 'Decline':
+                        $decline++;
+                        break;
+                    case 'Casual Leave':
+                        $cl++;
+                        break;
+                    case 'Sick Leave':
+                        $sl++;
+                        break;
+                    case 'Annual Leave':
+                        $al++;
+                        break;
+                    case 'Paternity Leave':
+                        $pl++;
+                        break;
+                    case 'Maternity Leave':
+                        $ml++;
+                        break;
+                    case 'Special Leave':
+                        $spl++;
+                        break;
+                    case 'Annual Total Leave':
+                        $atl++;
+                        break;
+                }
+            }
+            LeaveApplication::where('id', $applicationId)->update([
+                'status' => 'approved',
+            ]);
+            LeaveAllocation::where('user_id', $userId)->update([
+                'casual_leave_enjoyed' => $casualEnjoyed + $cl,
+                'sick_leave_enjoyed' => $sickEnjoyed + $sl,
+                'annual_leave_enjoyed' => $annualEnjoyed + $al,
+                'maternity_leave_enjoyed' => $maternityEnjoyed + $ml,
+                'paternity_leave_enjoyed' => $paternityEnjoyed + $pl,
+                'annual_leave_total_enjoyed' => $annualLeaveTotalEnjoyed + $atl,
+                'special_leave_enjoyed' => $specialEnjoyed + $spl,
+
+
+                'casual_leave_balance' => $casualAllowed - $cl,
+                'sick_leave_balance' => $sickAllowed - $sl,
+                'annual_leave_balance' => $annualAllowed - $al,
+                'maternity_leave_balance' => $maternityAllowed - $ml,
+                'paternity_leave_balance' => $paternityAllowed - $pl,
+                'annual_leave_total_balance' => $annualLeaveTotal - $atl,
+            ]);
+
+
+        } else {
+            LeaveApplication::where('id', $applicationId)->update([
+                'status' => 'declined',
+            ]);
+        }
+
+
+
+
+
+
+
 
 
 

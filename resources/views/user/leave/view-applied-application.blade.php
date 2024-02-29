@@ -32,70 +32,6 @@
                     </div>
 
                     <div>
-                        <div class="text-center">
-                            <span>Cl = Casual Leave ,</span>
-                            <span>SL = Sick Leave ,</span>
-                            <span>AL = Annual Leave ,</span>
-                            <span>ML = Maternity Leave ,</span>
-                            <span>PL = Paternity Leave ,</span>
-                            <span>ALT = Annual Leave Leave ,</span>
-                        </div>
-
-                        <form action="" method="POST">
-                            @csrf
-                            <input type="text" hidden name="leave_application_id" value="{{ $application->id }}">
-                            <input type="text" hidden name="user_id" value="{{ $application->user_id }}">
-
-                            <div class="row border p-2 m-2">
-                                <div class="col-md-2">
-                                    <label>CL</label>
-                                    <input name="casual_leave" type="text"
-                                        value="{{ $application->leave_type === 'Casual Leave' ? $application->leave_days : 0 }}"
-                                        class="w-50">
-                                </div>
-                                <div class="col-md-2">
-                                    <label>SL</label>
-                                    <input name="sick_leave" type="text"
-                                        value="{{ $application->leave_type === 'Sick Leave' ? $application->leave_days : 0 }}"
-                                        class="w-50">
-                                </div>
-                                <div class="col-md-2">
-                                    <label>AL</label>
-                                    <input name="annual_leave" type="text"
-                                        value="{{ $application->leave_type === 'Annual Leave' ? $application->leave_days : 0 }}"
-                                        class="w-50">
-                                </div>
-                                <div class="col-md-2">
-                                    <label>ML</label>
-                                    <input name="maternity_leave" type="text"
-                                        value="{{ $application->leave_type === 'Maternity Leave' ? $application->leave_days : 0 }}"
-                                        class="w-50">
-                                </div>
-                                <div class="col-md-2">
-                                    <label>PL</label>
-                                    <input name="paternity_leave" type="text"
-                                        value="{{ $application->leave_type === 'Paternity Leave' ? $application->leave_days : 0 }}"
-                                        class="w-50">
-                                </div>
-                                <div class="col-md-2">
-                                    <label>ALT</label>
-                                    <input name="annual_leave_total" type="text"
-                                        value="{{ $application->leave_type === 'Annual Leave Total' ? $application->leave_days : 0 }}"
-                                        class="w-50">
-                                </div>
-                                <div class="col-md-2 mt-1">
-                                    <label>Special Leave</label>
-                                    <input name="special_leave" type="text" value="0" class="w-50">
-                                </div>
-                            </div>
-                            @if ($application->status === 'pending')
-                                <button class="btn btn-success btn-sm" type="submit" value="approved"
-                                    name="status">Approve</button>
-                                <button class="btn btn-danger btn-sm" type="submit" value="declined"
-                                    name="status">Decline</button>
-                            @endif
-                        </form>
-
                         <form action="{{ route('store.applied.application', $application->id) }}" method="POST">
                             @csrf
                             <div class="row my-2">
@@ -116,17 +52,18 @@
                                                                 ->addDays($day - 1)
                                                                 ->format('Y-m-d');
                                                         @endphp
-                                                        <input type="text" name="date[]" value="{{ $date }}" disabled>
+                                                        <input type="text" name="date[]" value="{{ $date }}" readonly>
                                                     </td>
                                                     <td>
                                                         <select name="leave_type[]">
-                                                            <option value="decline">Decline</option>
-                                                            <option value="Casual Leave">Casual Leave</option>
-                                                            <option value="Sick Leave">Sick Leave</option>
-                                                            <option value="Annual Leave">Annual Leave</option>
-                                                            <option value="Paternity Leave">Paternity Leave</option>
-                                                            <option value="Maternity Leave">Maternity Leave</option>
+                                                            <option value="Decline">Decline</option>
+                                                            <option value="Casual Leave" {{ $leaveAllowcation->casual_leave_allowed == 0 ? 'disabled' : '' }}>Casual Leave</option>
+                                                            <option value="Sick Leave" {{ $leaveAllowcation->sick_leave_allowed == 0 ? 'disabled' : '' }}>Sick Leave</option>
+                                                            <option value="Annual Leave" {{ $leaveAllowcation->annual_leave_allowed == 0 ? 'disabled' : '' }}>Annual Leave</option>
+                                                            <option value="Paternity Leave" {{ $leaveAllowcation->paternity_leave_allowed == 0 ? 'disabled' : '' }}>Paternity Leave</option>
+                                                            <option value="Maternity Leave" {{ $leaveAllowcation->maternity_leave_allowed == 0 ? 'disabled' : '' }}>Maternity Leave</option>
                                                             <option value="Special Leave">Special Leave</option>
+                                                            <option value="Annual Total Leave" {{ $leaveAllowcation->annual_leave_total == 0 ? 'disabled' : '' }}>Annual Total Leave</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -134,9 +71,24 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="col-md-6 border-left">
+                                    <div>
+                                        <p><b>Leave Balance Summary:</b></p>
+                                        <ul>
+                                            <li>Casual Leave Balance: {{ $leaveAllowcation->casual_leave_balance }}</li>
+                                            <li>Sick Leave Balance: {{ $leaveAllowcation->sick_leave_balance }}</li>
+                                            <li>Annual Leave Balance: {{ $leaveAllowcation->annual_leave_balance }}</li>
+                                            <li>Maternity Leave Balance: {{ $leaveAllowcation->maternity_leave_balance }}</li>
+                                            <li>Paternity Leave Balance: {{ $leaveAllowcation->paternity_leave_balance }}</li>
+                                            <li>Annual Leave Total Balance: {{ $leaveAllowcation->annual_leave_total_balance }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <button class="btn btn-success btn-sm" type="submit">Save</button>
+                            <button class="btn btn-success btn-sm" type="submit" value="approved" name="application_status">Save</button>
+                            <button class="btn btn-danger btn-sm" type="submit" value="declined" name="application_status">Decline</button>
                         </form>
+
                     </div>
 
                     @if ($application->status === 'approved')

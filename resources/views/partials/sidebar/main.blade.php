@@ -33,6 +33,13 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('department.index') }}">
+                    <i class="fas fa-calendar"></i>
+                    <span>Departments</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#leave" data-toggle="collapse"
                    aria-expanded="false">
                     <i class="fas fa-list-ul"></i>

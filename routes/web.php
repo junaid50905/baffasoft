@@ -7,6 +7,7 @@ use Vanguard\Http\Controllers\Web\Member\MembersController;
 use Vanguard\App\Http\Controllers\Web\Member\CodeController;
 use Vanguard\Attendance;
 use Vanguard\Http\Controllers\AttendanceController;
+use Vanguard\Http\Controllers\DepartmentController;
 use Vanguard\Http\Controllers\LeaveController;
 use Vanguard\Http\Controllers\UserSalaryController;
 use Vanguard\Http\Controllers\Web\MultipleImageController;
@@ -212,6 +213,16 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
     Route::post('/apply-for-leave/{user}', [LeaveController::class, 'store'])->name('leave.store')->middleware('session.database');
     Route::get('/admin/users/{user}/allocate-leave', [LeaveController::class, 'allocateLeave'])->name('allocate.leave')->middleware('session.database');
     Route::post('/admin/users/{userId}/allocate-leave', [LeaveController::class, 'allocateLeaveStore'])->name('allocate.leave.store')->middleware('session.database');
+    
+    /**
+     * Department
+     */
+    Route::get('/admin/departments', [DepartmentController::class, 'index'])->name('department.index')->middleware('session.database');
+    Route::get('/admin/create-department', [DepartmentController::class, 'create'])->name('department.create')->middleware('session.database');
+    Route::post('/admin/create-department', [DepartmentController::class, 'store'])->name('department.store')->middleware('session.database');
+    Route::get('/admin/departments/{id}', [DepartmentController::class, 'destroy'])->name('department.delete')->middleware('session.database');
+    Route::get('/admin/departments/{id}/edit', [DepartmentController::class, 'edit'])->name('department.edit')->middleware('session.database');
+    Route::post('/admin/departments/{id}/edit', [DepartmentController::class, 'update'])->name('department.update')->middleware('session.database');
 
 
 
