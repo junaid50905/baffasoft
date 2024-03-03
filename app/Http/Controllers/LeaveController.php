@@ -9,6 +9,7 @@ use Vanguard\User;
 use Carbon\Carbon;
 use DB;
 use Vanguard\ApprovedDeclinedLeave;
+use Vanguard\Attendance;
 use Vanguard\LeaveApprove;
 
 class LeaveController extends Controller
@@ -113,8 +114,8 @@ class LeaveController extends Controller
     // viewMyAppliedApplication
     public function viewMyAppliedApplication($id)
     {
-        $approvedMyLeave = ApprovedDeclinedLeave::where('leave_application_id', $id)->first();
-        return view('user.leave.view-my-applied-application', compact('approvedMyLeave'));
+        $applicationId = $id;
+        return view('user.leave.view-my-applied-application', compact('applicationId'));
     }
     // newApplication
     public function appliedToMe()
@@ -129,7 +130,7 @@ class LeaveController extends Controller
     public function viewAppliedApplication($applicationId)
     {
         $application = LeaveApplication::where('id', $applicationId)->first();
-        
+
         $userId = $application->user_id;
         $leaveAllowcation = LeaveAllocation::where('user_id', $userId)->first();
         return view('user.leave.view-applied-application', compact('application', 'leaveAllowcation'));
@@ -137,6 +138,8 @@ class LeaveController extends Controller
     // storeAppliedApplication
     public function storeAppliedApplication(Request $request, $applicationId)
     {
+
+        
 
         //////////
         $userId = LeaveApplication::where('id', $applicationId)->first()->user_id;
@@ -164,7 +167,14 @@ class LeaveController extends Controller
         //////////
         $dates = $request->input('date');
         $leaveTypes = $request->input('leave_type');
-        $dates = array_combine($dates, $leaveTypes);
+        $allFormatedDates = [];
+        foreach ($dates as $date) {
+            $allFormatedDates[] = Carbon::createFromFormat('Y-m-d', $date)->toDateString();
+
+        }
+        $finialDdates = array_combine($allFormatedDates, $leaveTypes);
+
+
 
         $applicationStatus = $request->input('application_status');
 
@@ -178,15 +188,37 @@ class LeaveController extends Controller
         $atl = 0;
 
         if ($applicationStatus === 'approved') {
-            foreach ($dates as $date => $type) {
+            foreach ($finialDdates as $date => $type) {
+
+                $formatedDate = Carbon::createFromFormat('Y-m-d', $date)->format('d-M-y');
+                $dayName = Carbon::createFromFormat('Y-m-d', $date)->format('D');
+
                 $leaveApprove = new LeaveApprove();
                 // Set the attributes for the LeaveApprove instance
                 $leaveApprove->leave_application_id = $applicationId;
                 $leaveApprove->user_id = $userId;
-                $leaveApprove->date = $date;
+                $leaveApprove->date = $formatedDate;
                 $leaveApprove->leave_type = $type;
+
                 // Save the LeaveApprove instance
-                $leaveApprove->save();                
+                $leaveApprove->save();
+
+                
+
+
+
+                if(Attendance::where('user_id', $userId)->where('date', $formatedDate)->where('absent', 'TRUE')->exists()){
+                    Attendance::where('user_id', $userId)->where('date', $formatedDate)->update([
+                        'absent' => "Leave"
+                    ]);
+                }else{
+                    Attendance::insert([
+                        'user_id' => $userId,
+                        'date' => $formatedDate,
+                        'absent' => "Leave",
+                        'week' => $dayName,
+                    ]);
+                }
 
                 switch ($type) {
                     case 'Decline':
@@ -243,74 +275,6 @@ class LeaveController extends Controller
             ]);
         }
 
-
-
-
-
-
-
-
-
-
-        // ////////////////////////////////////////////////
-        // $approved_days = $request->casual_leave + $request->sick_leave + $request->annual_leave + $request->maternity_leave + $request->paternity_leave + $request->special_leave + $request->annual_leave_total;
-        // ApprovedDeclinedLeave::insert([
-        //     'leave_application_id' => $request->leave_application_id,
-        //     'user_id' => $request->user_id,
-        //     'casual_leave' => $request->casual_leave,
-        //     'sick_leave' => $request->sick_leave,
-        //     'annual_leave' => $request->annual_leave,
-        //     'maternity_leave' => $request->maternity_leave,
-        //     'paternity_leave' => $request->paternity_leave,
-        //     'special_leave' => $request->special_leave,
-        //     'annual_leave_total' => $request->annual_leave_total,
-        //     'approved_days' => $approved_days,
-        //     'status' => $request->status,
-        // ]);
-
-        // // leave_applications
-        // LeaveApplication::where('id', $applicationId)->update([
-        //     'status' => $request->status
-        // ]);
-
-        // // leave_allocations
-        // $leaveAllowcation = LeaveAllocation::where('user_id', $request->user_id)->first();
-
-        // $enjoyed_cl = $leaveAllowcation->casual_leave_enjoyed;
-        // $enjoyed_sl = $leaveAllowcation->sick_leave_enjoyed;
-        // $enjoyed_al = $leaveAllowcation->annual_leave_enjoyed;
-        // $enjoyed_ml = $leaveAllowcation->maternity_leave_enjoyed;
-        // $enjoyed_pl = $leaveAllowcation->paternity_leave_enjoyed;
-        // $enjoyed_alt = $leaveAllowcation->annual_leave_total_enjoyed;
-        // $enjoyed_spl = $leaveAllowcation->special_leave_enjoyed;
-
-        // $balance_cl = $leaveAllowcation->casual_leave_balance;
-        // $balance_sl = $leaveAllowcation->sick_leave_balance;
-        // $balance_al = $leaveAllowcation->annual_leave_balance;
-        // $balance_ml = $leaveAllowcation->maternity_leave_balance;
-        // $balance_pl = $leaveAllowcation->paternity_leave_balance;
-        // $balance_alt = $leaveAllowcation->annual_leave_total_balance;
-
-
-        // LeaveAllocation::where('user_id', $request->user_id)->update([
-
-        //     'casual_leave_enjoyed' => $enjoyed_cl + $request->casual_leave,
-        //     'sick_leave_enjoyed' => $enjoyed_sl + $request->sick_leave,
-        //     'annual_leave_enjoyed' => $enjoyed_al + $request->annual_leave,
-        //     'maternity_leave_enjoyed' => $enjoyed_ml + $request->maternity_leave,
-        //     'paternity_leave_enjoyed' => $enjoyed_pl + $request->paternity_leave,
-        //     'annual_leave_total_enjoyed' => $enjoyed_alt + $request->annual_leave_total,
-        //     'special_leave_enjoyed' => $enjoyed_spl + $request->special_leave,
-
-        //     'casual_leave_balance' => $balance_cl - $request->casual_leave,
-        //     'sick_leave_balance' => $balance_sl - $request->sick_leave,
-        //     'annual_leave_balance' => $balance_al - $request->annual_leave,
-        //     'maternity_leave_balance' => $balance_ml - $request->maternity_leave,
-        //     'paternity_leave_balance' => $balance_pl - $request->paternity_leave,
-        //     'annual_leave_total_balance' => $balance_alt - $request->annual_leave_total,
-
-        // ]);
-        // ///////////////////////////////
 
         return redirect()->route('leave.applied.to.me');
     }

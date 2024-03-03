@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     use HasFactory;
-    
+
     protected $table = "attendance";
 
-    protected $fillable = ['user_id', 'date', 'in_time', 'out_time', 'status'];
+    protected $fillable = ['user_id', 'date', 'clock_in', 'clock_out', 'late', 'early', 'absent', 'clockin_clockout', 'week'];
 }

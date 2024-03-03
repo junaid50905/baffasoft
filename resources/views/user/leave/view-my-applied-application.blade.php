@@ -22,15 +22,32 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4>Approved Days : {{ $approvedMyLeave->approved_days ?? '' }}</h4>
-                    <p class="m-1"><b>Casual Leave :</b>{{ $approvedMyLeave->casual_leave ?? '' }}</p>
-                    <p class="m-1"><b>Sick Leave :</b>{{ $approvedMyLeave->sick_leave ?? '' }}</p>
-                    <p class="m-1"><b>Annual Leave :</b>{{ $approvedMyLeave->annual_leave ?? '' }}</p>
-                    <p class="m-1"><b>Maternity Leave :</b>{{ $approvedMyLeave->maternity_leave ?? '' }}</p>
-                    <p class="m-1"><b>Paternity Leave :</b>{{ $approvedMyLeave->paternity_leave ?? '' }}</p>
-                    <p class="m-1"><b>Special Leave :</b>{{ $approvedMyLeave->special_leave ?? '' }}</p>
-                    <p class="m-1"><b>Annual Leave alpecial Leave :</b>{{ $approvedMyLeave->annual_leave_total ?? '' }}
-                    </p>
+                    @php
+                        $application = DB::table('leave_applications')->where('id', $applicationId)->first();
+                        $userId = $application->user_id;
+                        $status = $application->status;
+
+                        $approvedDays = DB::table('leave_approves')
+                            ->where('leave_application_id', $applicationId)
+                            ->where('user_id', $userId)
+                            ->get();
+                    @endphp
+
+                    @if ($status == 'approved')
+                        <p class="badge badge-success">{{ $status }}</p>
+                        <div>
+                            <h5>Leave approved days:</h5>
+                            @foreach ($approvedDays as $day)
+                                <p class="m-1">{{ $day->date }} : {{ $day->leave_type }}</p>
+                            @endforeach
+                        </div>
+                    @elseif($status == 'declined')
+                        <p class="badge badge-danger">{{ $status }}</p>
+                        <p class="text-danger">Your application has been declined</p>
+                    @elseif($status == 'pending')
+                        <p class="badge badge-info">{{ $status }}</p>
+                        <p class="text-danger">Your application is in pending</p>
+                    @endif
                 </div>
             </div>
         </div>

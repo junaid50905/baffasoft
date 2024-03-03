@@ -25,17 +25,30 @@ class AttendanceController extends Controller
 
         foreach ($csv as $record) {
             if (!empty($record['user_id'])) {
-                Attendance::insert([
-                    'user_id' => $record['user_id'],
-                    'date' => $record['date'],
-                    'clock_in' => $record['clock_in'],
-                    'clock_out' => $record['clock_out'],
-                    'late' => $record['late'],
-                    'early' => $record['early'],
-                    'absent' => $record['absent'],
-                    'clockin_clockout' => $record['clockin_clockout'],
-                    'week' => $record['week'],
-                ]);
+                if (Attendance::where('user_id', $record['user_id'])->where('date', $record['date'])->where('absent', "Leave")->exists()) {
+                    Attendance::where('user_id', $record['user_id'])->where('date', $record['date'])->where('absent', "Leave")->update([
+                        'user_id' => $record['user_id'],
+                        'date' => $record['date'],
+                        'clock_in' => $record['clock_in'],
+                        'clock_out' => $record['clock_out'],
+                        'late' => $record['late'],
+                        'early' => $record['early'],
+                        'absent' => 'Leave',
+                        'clockin_clockout' => $record['clockin_clockout'],
+                    ]);
+                }else{
+                    Attendance::insert([
+                        'user_id' => $record['user_id'],
+                        'date' => $record['date'],
+                        'clock_in' => $record['clock_in'],
+                        'clock_out' => $record['clock_out'],
+                        'late' => $record['late'],
+                        'early' => $record['early'],
+                        'absent' => $record['absent'],
+                        'clockin_clockout' => $record['clockin_clockout'],
+                        'week' => $record['week'],
+                    ]);
+                }                
             } else {
                 continue;
             }

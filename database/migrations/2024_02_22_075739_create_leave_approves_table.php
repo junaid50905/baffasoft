@@ -17,7 +17,7 @@ class CreateLeaveApprovesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('leave_application_id');
             $table->unsignedBigInteger('user_id');
-            $table->date('date');
+            $table->string('date');
             $table->string('leave_type');
             $table->timestamps();
             $table->foreign('leave_application_id')->references('id')->on('leave_applications');
