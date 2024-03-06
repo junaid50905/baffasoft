@@ -9,6 +9,7 @@ use Vanguard\Repositories\Session\SessionRepository;
 use Vanguard\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Vanguard\Department;
 use Vanguard\UserProfile;
 
 /**
@@ -71,10 +72,12 @@ class SessionsController extends Controller
      */
     public function updateProfileShow(User $user)
     {
+        $departments = Department::all();
 
         return view('user.update-profile', [
             'adminView' => true,
             'user' => $user,
+            'departments' => $departments,
             'sessions' => $this->sessions->getUserSessions($user->id)
         ]);
 

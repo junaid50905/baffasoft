@@ -15,7 +15,7 @@ class AttendanceController extends Controller
     // uploadCSV
     public function uploadCSV()
     {
-        return view('attendance.upload-csv');
+        return view('user.attendance.upload-csv');
     }
     // CSVStore
     public function CSVStore(Request $request)
@@ -36,7 +36,7 @@ class AttendanceController extends Controller
                         'absent' => 'Leave',
                         'clockin_clockout' => $record['clockin_clockout'],
                     ]);
-                }else{
+                } else {
                     Attendance::insert([
                         'user_id' => $record['user_id'],
                         'date' => $record['date'],
@@ -48,17 +48,51 @@ class AttendanceController extends Controller
                         'clockin_clockout' => $record['clockin_clockout'],
                         'week' => $record['week'],
                     ]);
-                }                
+                }
             } else {
                 continue;
             }
         }
-        return redirect()->route('attendance.index');
+        return redirect()->route('attendance.report.summary');
     }
     // attendanceIndex
-    public function attendanceIndex()
+    public function attendanceReportSummarySetDate()
     {
-        return view('attendance.attendance-index');
+        return view('user.attendance.set-date');
+    }
+
+    /**
+     * attendanceReportSummaryStore
+     */
+    public function attendanceReportSummaryStore(Request $request)
+    {
+
+        $from = Carbon::createFromFormat('Y-m-d', $request->from_date)->format('d-M-y');
+        $to = Carbon::createFromFormat('Y-m-d', $request->to_date)->format('d-M-y');
+
+
+
+            $distinctUsers = Attendance::select('user_id')
+            ->whereBetween('date', [$from, $to])
+            ->groupBy('user_id')
+            ->get();
+
+            $distinctUserIds = $distinctUsers->pluck('user_id');
+
+            $allUsers = Attendance::whereIn('user_id', $distinctUserIds)->get();
+
+            $totalPresent = Attendance::whereBetween('date', [$from, $to])->where('clock_in', '!=', '')->get()->count();
+            $totalAbsent = Attendance::whereBetween('date', [$from, $to])->where('clock_in', '')->where('clock_out', '')->where('week', '!=', 'Fri')->count();
+            $totalLate = Attendance::whereBetween('date', [$from, $to])->where('late', '!=', '')->count();
+            $totalEarly = Attendance::whereBetween('date', [$from, $to])->where('early', '>', '0:00')->count();
+
+
+            return view('user.attendance.view-date-wise-report', compact('distinctUserIds', 'from', 'to', 'totalPresent', 'totalAbsent', 'totalLate', 'totalEarly'));
+        
+
+
+
+
     }
 
 
@@ -84,7 +118,6 @@ class AttendanceController extends Controller
 
             return view('user.pay-salary', compact('lateCount', 'formattedDate', 'absentCount', 'user', 'rateOfPay', 'afterChangeSalary'));
         }
-
     }
 
     // monthlyAttendance

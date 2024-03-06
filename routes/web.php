@@ -9,6 +9,8 @@ use Vanguard\Attendance;
 use Vanguard\Http\Controllers\AttendanceController;
 use Vanguard\Http\Controllers\DepartmentController;
 use Vanguard\Http\Controllers\LeaveController;
+use Vanguard\Http\Controllers\PdfGenerationController;
+use Vanguard\Http\Controllers\SalaryInfoController;
 use Vanguard\Http\Controllers\UserSalaryController;
 use Vanguard\Http\Controllers\Web\MultipleImageController;
 
@@ -195,9 +197,6 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
         Route::get('salary-history', [UserSalaryController::class, 'userSalaryHistory'])->name('user.salary.history')->middleware('session.database');
         Route::get('salary-history/update-salary/{salaryId}', [UserSalaryController::class, 'userUpdateSalary'])->name('user.update.salary')->middleware('session.database');
         Route::post('salary-history/update-salary/{salaryId}', [UserSalaryController::class, 'userUpdateSalaryStore'])->name('user.update.salary.store')->middleware('session.database');
-
-
-
     });
 
     /**
@@ -213,7 +212,7 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
     Route::post('/apply-for-leave/{user}', [LeaveController::class, 'store'])->name('leave.store')->middleware('session.database');
     Route::get('/admin/users/{user}/allocate-leave', [LeaveController::class, 'allocateLeave'])->name('allocate.leave')->middleware('session.database');
     Route::post('/admin/users/{userId}/allocate-leave', [LeaveController::class, 'allocateLeaveStore'])->name('allocate.leave.store')->middleware('session.database');
-    
+
     /**
      * Department
      */
@@ -225,6 +224,20 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
     Route::post('/admin/departments/{id}/edit', [DepartmentController::class, 'update'])->name('department.update')->middleware('session.database');
 
 
+    /**
+     *
+     */
+    Route::get('/admin/salary-info/set-year-month', [SalaryInfoController::class, 'salaryInfo'])->name('salary.info')->middleware('session.database');
+    Route::post('/admin/salary-info', [SalaryInfoController::class, 'salaryInfoStore'])->name('salary.info.store')->middleware('session.database');
+
+
+    /**
+     * PdfGenerationController
+     */
+    Route::get('/admin/monthwise-salary-info/{office}/{year_month}', [PdfGenerationController::class, 'monthWiseSalary'])->name('pdf.monthWiseSalary')->middleware('session.database');
+    Route::get('/admin/attendance/download/report-summary/{fromDate}/{toDate}', [PdfGenerationController::class, 'reportSummary'])->name('pdf.report.summary')->middleware('session.database');
+
+
 
     /**
      * Attendance
@@ -232,7 +245,8 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
     Route::prefix('admin/attendance')->group(function () {
         Route::get('/upload-csv', [AttendanceController::class, 'uploadCSV'])->name('upload.csv')->middleware('session.database');
         Route::post('/upload-csv', [AttendanceController::class, 'CSVStore'])->name('upload.csv.store')->middleware('session.database');
-        Route::get('/attendance', [AttendanceController::class, 'attendanceIndex'])->name('attendance.index')->middleware('session.database');
+        Route::get('/report-summary/set-date', [AttendanceController::class, 'attendanceReportSummarySetDate'])->name('attendance.report.summary.setDate')->middleware('session.database');
+        Route::post('/report-summary/store', [AttendanceController::class, 'attendanceReportSummaryStore'])->name('attendance.report.summary.store')->middleware('session.database');
 
         ////////////
         Route::post('/show-user-monthly-attendance/{userId}', [AttendanceController::class, 'showUserMonthlyAttendance'])->name('user.monthly.attendance')->middleware('session.database');

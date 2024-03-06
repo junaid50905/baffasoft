@@ -40,6 +40,13 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('salary.info') }}">
+                    <i class="fas fa-calendar"></i>
+                    <span>Salary Info</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#leave" data-toggle="collapse"
                    aria-expanded="false">
                     <i class="fas fa-list-ul"></i>
@@ -82,8 +89,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('attendance.index') }}">
-                            <span>View attendance</span>
+                        <a class="nav-link" href="{{ route('attendance.report.summary.setDate') }}">
+                            <span>Report summary</span>
                         </a>
                     </li>
                 </ul>

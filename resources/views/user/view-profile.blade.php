@@ -82,7 +82,7 @@
                         </div>
                         <div class="col-md-3">
                             <h5 class="text-muted">Department</h5>
-                            <p class="text-secondary">{{ $userProfile->department_id ?? 'Null' }}
+                            <p class="text-secondary">{{ DB::table('departments')->where('id', $userProfile->department_id)->first()->name ?? 'Null' }}
                             </p>
                         </div>
                     </div>

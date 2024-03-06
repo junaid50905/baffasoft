@@ -34,12 +34,9 @@
                                     <div class="col-md-3">
                                         <label>Department</label>
                                         <select class="form-control" name="department_id">
-                                            <option value="1"
-                                                {{ $profile_info->department_id == '1' ? 'selected' : '' }}>Protocol &
-                                                Public Relation</option>
-                                            <option value="2"
-                                                {{ $profile_info->department_id == '2' ? 'selected' : '' }}>Office Support
-                                                Staff</option>
+                                            @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}" {{ $profile_info->department_id ==  $department->id  ? 'selected' : '' }}>{{ $department->name }}</option>                                                
+                                            @endforeach
                                         </select>
                                     </div>
 
