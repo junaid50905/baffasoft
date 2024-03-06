@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('salary.info.store') }}" method="POST">
+                    <form action="{{ route('salary.info.store') }}" method="POST" target="_blank">
                         @csrf
 
                         <div class="row">

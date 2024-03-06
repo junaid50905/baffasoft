@@ -34,7 +34,7 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('department.index') }}">
-                    <i class="fas fa-calendar"></i>
+                    <i class="fas fa-building"></i>
                     <span>Departments</span>
                 </a>
             </li>

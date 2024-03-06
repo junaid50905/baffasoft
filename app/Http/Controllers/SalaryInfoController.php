@@ -28,7 +28,6 @@ class SalaryInfoController extends Controller
 
         $salaryPaidUsers = [];
 
-        $sumOfColumns = [];
 
         foreach ($usersBasedOnPlaceOfPosting as $user) {
             $salaryPaidUser = EmployeeSalary::where('user_id', $user->user_id)->where('paid_year_month', $request->year_month)->where('payment_status', 'paid')->first();

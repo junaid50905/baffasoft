@@ -16,13 +16,13 @@
 @section('content')
 
     @include('partials.messages')
-    
+
 
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('attendance.report.summary.store') }}" method="POST">
+                    <form action="{{ route('attendance.report.summary.store') }}" method="POST" target="_blank">
                         @csrf
                         <div class="row align-items-center">
                             <div class="col-md-3">

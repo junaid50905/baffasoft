@@ -19,11 +19,7 @@ class MultipleImageController extends Controller
 
         if ($request->name && $request->file('url')) {
 
-            // $request->validate([
-            //     'name' => 'required',
-            //     'url' => 'required|mimes:jpg,pdf',
 
-            // ]);
 
             $names = $request->name;
             $urls = $request->file('url');

@@ -82,8 +82,14 @@
                         </div>
                         <div class="col-md-3">
                             <h5 class="text-muted">Department</h5>
-                            <p class="text-secondary">{{ DB::table('departments')->where('id', $userProfile->department_id)->first()->name ?? 'Null' }}
-                            </p>
+                            @if ($userProfile && isset($userProfile->department_id))
+                                <p class="text-secondary">
+                                    {{ DB::table('departments')->where('id', $userProfile->department_id)->first()->name ?? '' }}
+                                </p>
+                            @else
+                                <p class="text-secondary">No department information available</p>
+                            @endif
+
                         </div>
                     </div>
 
@@ -154,17 +160,18 @@
                                 <p class="text-secondary">{{ $salaryInfo->basic_salary ?? 'Null' }}</p>
                             </div>
                             <div class="col-md-4">
-                                <h5 class="text-muted">House Rent Allowance({{ $salaryInfo->house_rent_in_percent ?? '' }}%)
+                                <h5 class="text-muted">House Rent
+                                    Allowance({{ $salaryInfo->house_rent_in_percent ?? '' }}%)
                                 </h5>
                                 <p class="text-secondary">{{ $salaryInfo->house_rent_allowance ?? 'Null' }}</p>
                             </div>
                             <div class="col-md-4">
                                 <h5 class="text-muted">Medical
-                                    Allowance({{ $salaryInfo->medical_allowance_in_percent ?? "" }}%)</h5>
+                                    Allowance({{ $salaryInfo->medical_allowance_in_percent ?? '' }}%)</h5>
                                 <p class="text-secondary">{{ $salaryInfo->medical_allowance ?? 'Null' }}</p>
                             </div>
                             <div class="col-md-3">
-                                <h5 class="text-muted">Conveyance({{ $salaryInfo->conveyance_in_percent ?? ""}}%)</h5>
+                                <h5 class="text-muted">Conveyance({{ $salaryInfo->conveyance_in_percent ?? '' }}%)</h5>
                                 <p class="text-secondary">{{ $salaryInfo->conveyance ?? 'Null' }}</p>
                             </div>
                             <div class="col-md-3">
@@ -182,7 +189,7 @@
                                 <p class="text-secondary">{{ $salaryInfo->tds ?? 'Null' }}</p>
                             </div>
                             <div class="col-md-3">
-                                <h5 class="text-muted">Provident Fund({{ $salaryInfo->provident_fund_in_percent ?? "" }}%)
+                                <h5 class="text-muted">Provident Fund({{ $salaryInfo->provident_fund_in_percent ?? '' }}%)
                                 </h5>
                                 <p class="text-secondary">{{ $salaryInfo->provident_fund ?? 'Null' }}</p>
                             </div>
@@ -193,7 +200,8 @@
                         </div>
                     </fieldset>
 
-                    <a href="{{ route('monthly.attendance', $user->id) }}" class="btn btn-primary mt-3"><i class="fas fa-money-bill"></i>Pay salary</a>
+                    <a href="{{ route('monthly.attendance', $user->id) }}" class="btn btn-primary mt-3"><i
+                            class="fas fa-money-bill"></i>Pay salary</a>
                 </div>
 
             </div>
