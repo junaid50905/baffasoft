@@ -41,7 +41,7 @@ class PdfGenerationController extends Controller
         $from = $fromDate;
         $to = $toDate;
 
-        
+
         $distinctUsers = Attendance::select('user_id')
         ->whereBetween('date', [$from, $to])
             ->groupBy('user_id')
@@ -59,6 +59,20 @@ class PdfGenerationController extends Controller
 
         $pdf = Pdf::loadView('user.pdf.date-wise-report', compact('distinctUserIds', 'from', 'to', 'totalPresent', 'totalAbsent', 'totalLate', 'totalEarly'))->setPaper('a4', 'landscape');
         return $pdf->download($from . ' to ' . $to . ' attendance summary report ' . time() . '.pdf');
+    }
+    /**
+     * lateReport
+     */
+    public function lateReport($fromDate, $toDate)
+    {
+        $from = $fromDate;
+        $to = $toDate;
+
+        $attendances = Attendance::whereBetween('date', [$from, $to])->where('late', '!=', '')->get();
+
+        $pdf = Pdf::loadView('user.pdf.late-report', compact('attendances', 'from', 'to'));
+        return $pdf->download($from . ' to ' . $to . ' late report ' . time() . '.pdf');
+
     }
 
 }

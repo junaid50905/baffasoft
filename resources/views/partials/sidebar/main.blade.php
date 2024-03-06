@@ -93,6 +93,11 @@
                             <span>Report summary</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('attendance.late.report.setDate') }}">
+                            <span>Late Report</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 

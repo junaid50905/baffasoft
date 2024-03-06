@@ -88,7 +88,7 @@ class AttendanceController extends Controller
 
 
             return view('user.attendance.view-date-wise-report', compact('distinctUserIds', 'from', 'to', 'totalPresent', 'totalAbsent', 'totalLate', 'totalEarly'));
-        
+
 
 
 
@@ -124,5 +124,26 @@ class AttendanceController extends Controller
     public function monthlyAttendance($user)
     {
         return view('user.show-attendance-late', compact('user'));
+    }
+
+    /**
+     * lateReportSetDate
+     */
+    public function lateReportSetDate()
+    {
+        return view('user.attendance.late report.set-date');
+    }
+    /**
+     * lateReportStore
+     */
+    public function lateReportStore(Request $request)
+    {
+        $from = Carbon::createFromFormat('Y-m-d', $request->from_date)->format('d-M-y');
+        $to = Carbon::createFromFormat('Y-m-d', $request->to_date)->format('d-M-y');
+
+        $attendances = Attendance::whereBetween('date', [$from, $to])->where('late', '!=', '')->get();
+
+        return view('user.attendance.late report.view-late-report', compact('attendances', 'from', 'to'));
+
     }
 }

@@ -236,6 +236,7 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
      */
     Route::get('/admin/monthwise-salary-info/{office}/{year_month}', [PdfGenerationController::class, 'monthWiseSalary'])->name('pdf.monthWiseSalary')->middleware('session.database');
     Route::get('/admin/attendance/download/report-summary/{fromDate}/{toDate}', [PdfGenerationController::class, 'reportSummary'])->name('pdf.report.summary')->middleware('session.database');
+    Route::get('/admin/attendance/download/late-report/{fromDate}/{toDate}', [PdfGenerationController::class, 'lateReport'])->name('pdf.late.report')->middleware('session.database');
 
 
 
@@ -247,6 +248,9 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
         Route::post('/upload-csv', [AttendanceController::class, 'CSVStore'])->name('upload.csv.store')->middleware('session.database');
         Route::get('/report-summary/set-date', [AttendanceController::class, 'attendanceReportSummarySetDate'])->name('attendance.report.summary.setDate')->middleware('session.database');
         Route::post('/report-summary/store', [AttendanceController::class, 'attendanceReportSummaryStore'])->name('attendance.report.summary.store')->middleware('session.database');
+
+        Route::get('/late-report/set-date', [AttendanceController::class, 'lateReportSetDate'])->name('attendance.late.report.setDate')->middleware('session.database');
+        Route::post('/late-report/store', [AttendanceController::class, 'lateReportStore'])->name('attendance.late.report.store')->middleware('session.database');
 
         ////////////
         Route::post('/show-user-monthly-attendance/{userId}', [AttendanceController::class, 'showUserMonthlyAttendance'])->name('user.monthly.attendance')->middleware('session.database');
