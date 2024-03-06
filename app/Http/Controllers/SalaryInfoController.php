@@ -3,6 +3,7 @@
 namespace Vanguard\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use Vanguard\EmployeeSalary;
 use Vanguard\UserProfile;
 
@@ -36,6 +37,7 @@ class SalaryInfoController extends Controller
                 $salaryPaidUsers[] = $salaryPaidUser;
             }
         }
+        
         return view('user.salary.index', compact('salaryPaidUsers', 'office', 'year_month'));
     }
 }

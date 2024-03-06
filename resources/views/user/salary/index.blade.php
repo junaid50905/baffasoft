@@ -112,6 +112,22 @@
 
             </thead>
             <tbody>
+                @php
+                    // rate of pay and income
+                    $totalRp_basic = 0;
+                    $totalRp_hr = 0;
+                    $totalRp_medical = 0;
+                    $totalRp_conveyance = 0;
+                    $totalRp_other_addition = 0;
+                    $totalRp_total_salary = 0;
+
+                    // deduction
+                    $deduction_tax_deduction = 0;
+                    $deduction_other_subtruction = 0;
+                    $deduction_provident_fund = 0;
+                    $deduction_total = 0;
+                    $total_netPayment = 0;
+                @endphp
                 @foreach ($salaryPaidUsers as $salaryPaidUser)
                     @php
                         $user = DB::table('users')
@@ -145,6 +161,20 @@
                         // netpayment
                         $netpayment = $employeeSalary->net_payment;
 
+                        ////////////
+                        $totalRp_basic += $rateofpay_basic_salary;
+                        $totalRp_hr += $rateofpay_house_rent;
+                        $totalRp_medical += $rateofpay_medical;
+                        $totalRp_conveyance += $rateofpay_conveyance;
+                        $totalRp_other_addition += $rateofpay_other_addition;
+                        $totalRp_total_salary += $rateofpay_totalSalary;
+                        ////////////
+                        $deduction_tax_deduction += $deduction_tds;
+                        $deduction_other_subtruction += $deduction_other_subtraction;
+                        $deduction_provident_fund += $deduction_pf;
+                        $deduction_total += $total_deduction;
+                        $total_netPayment += $netpayment;
+
                     @endphp
                     <tr>
                         <td>{{ $loop->iteration }}</td>
@@ -171,8 +201,35 @@
                         <td>{{ $total_deduction }}</td>
                         <td>{{ $netpayment }}</td>
                     </tr>
-                @endforeach            
+                @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th>Total</th>
+                    <th></th>
+                    <th></th>
+                    <th>{{ $totalRp_basic }}</th>
+                    <th>{{ $totalRp_hr }}</th>
+                    <th>{{ $totalRp_medical }}</th>
+                    <th>{{ $totalRp_conveyance }}</th>
+                    <th>{{ $totalRp_other_addition }}</th>
+                    <th>{{ $totalRp_total_salary }}</th>
+                    <th></th>
+                    <th></th>
+                    <th>{{ $totalRp_basic }}</th>
+                    <th>{{ $totalRp_hr }}</th>
+                    <th>{{ $totalRp_medical }}</th>
+                    <th>{{ $totalRp_conveyance }}</th>
+                    <th>{{ $totalRp_other_addition }}</th>
+                    <th>{{ $totalRp_total_salary }}</th>
+                    <th>{{ $deduction_tax_deduction }}</th>
+                    <th>{{ $deduction_other_subtruction }}</th>
+                    <th>{{ $deduction_provident_fund }}</th>
+                    <th>{{ $deduction_total }}</th>
+                    <th>{{ $total_netPayment }}</th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </body>

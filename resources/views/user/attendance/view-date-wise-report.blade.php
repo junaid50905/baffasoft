@@ -89,7 +89,7 @@
 
 <body>
 
-    
+
 
     <div class="header">
         <div class="company-details">
@@ -132,7 +132,7 @@
 
 
 
-    <table style="margin-top: 20px;" class="table">
+    <table class="table">
         <thead>
             <tr>
                 <th rowspan="2">EMP NO</th>

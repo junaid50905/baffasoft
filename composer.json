@@ -48,6 +48,7 @@
         "milon/barcode": "^8.0",
         "predis/predis": "^1.1",
         "proengsoft/laravel-jsvalidation": "^4.0.0",
+        "rmunate/spell-number": "^4.2",
         "spatie/laravel-medialibrary": "^9.0.0",
         "spatie/laravel-query-builder": "^3.0",
         "tightenco/ziggy": "^1.4",
