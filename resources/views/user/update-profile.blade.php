@@ -35,7 +35,7 @@
                                         <label>Department</label>
                                         <select class="form-control" name="department_id">
                                             @foreach ($departments as $department)
-                                            <option value="{{ $department->id }}" {{ $profile_info->department_id ==  $department->id  ? 'selected' : '' }}>{{ $department->name }}</option>                                                
+                                            <option value="{{ $department->id }}" {{ $profile_info->department_id ==  $department->id  ? 'selected' : '' }}>{{ $department->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -107,8 +107,16 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label>Blood Group</label>
-                                        <input type="text" name="blood_group" class="form-control"
-                                            value="{{ $profile_info->blood_group }}" />
+                                        <select name="blood_group" class="form-control">
+                                            <option value="O+" {{ $profile_info->blood_group == 'O+' ? 'selected' : '' }}>O+</option>
+                                            <option value="O-" {{ $profile_info->blood_group == 'O-' ? 'selected' : '' }}>O-</option>
+                                            <option value="A+" {{ $profile_info->blood_group == 'A+' ? 'selected' : '' }}>A+</option>
+                                            <option value="A-" {{ $profile_info->blood_group == 'A-' ? 'selected' : '' }}>A-</option>
+                                            <option value="B+" {{ $profile_info->blood_group == 'B+' ? 'selected' : '' }}>B+</option>
+                                            <option value="B-" {{ $profile_info->blood_group == 'B-' ? 'selected' : '' }}>B-</option>
+                                            <option value="AB+" {{ $profile_info->blood_group == 'AB+' ? 'selected' : '' }}>AB+</option>
+                                            <option value="AB-" {{ $profile_info->blood_group == 'Ab-' ? 'selected' : '' }}>AB-</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-3">
                                         <label>Last Education</label>
@@ -141,8 +149,9 @@
                                     <div class="col-md-3">
                                         <label>Department</label>
                                         <select class="form-control" name="department_id">
-                                            <option value="1">Protocol & Public Relation</option>
-                                            <option value="2">Office Support Staff</option>
+                                            @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -199,7 +208,16 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label>Blood Group</label>
-                                        <input type="text" name="blood_group" class="form-control" />
+                                        <select name="blood_group" class="form-control">
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-3">
                                         <label>Last Education</label>

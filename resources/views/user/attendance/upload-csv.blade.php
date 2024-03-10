@@ -25,6 +25,11 @@
                         <input type="file" name="csv_file">
                         <button type="submit" class="btn btn-success btn-sm">Save</button>
                     </form>
+
+                    <div class="mt-5">
+                        <p><b>Note: Make sure your Attendance CSV file's format is like the following image</b></p>
+                        <img src="{{ asset('images/csv format.jpg') }}" class="img-fluid">
+                    </div>
                 </div>
             </div>
         </div>

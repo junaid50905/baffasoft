@@ -17,6 +17,15 @@
 
     @include('partials.messages')
 
+    @if (Session::has('attendance_report_date_miss_match'))
+        <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>{{ Session('attendance_report_date_miss_match') }}</strong>
+    </div>
+    @endif
+
+
+
 
     <div class="row">
         <div class="col-md-12">
@@ -27,11 +36,11 @@
                         <div class="row align-items-center">
                             <div class="col-md-3">
                                 <label>From</label>
-                                <input type="date" name="from_date" class="form-control">
+                                <input type="date" name="from_date" class="form-control" required>
                             </div>
                             <div class="col-md-3">
                                 <label>To</label>
-                                <input type="date" name="to_date" class="form-control">
+                                <input type="date" name="to_date" class="form-control" required>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-sm btn-dark mt-2">See report</button>

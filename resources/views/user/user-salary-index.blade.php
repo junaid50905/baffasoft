@@ -44,7 +44,6 @@
                                     <td>{{ $salary->net_payment }}</td>
                                     <td>
                                         <a href="{{ route('user.update.salary', [$user->id, $salary->id]) }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <a class="btn btn-success btn-sm">View</a>
                                     </td>
                                 </tr>
                             @endforeach

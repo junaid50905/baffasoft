@@ -70,12 +70,11 @@ class AttendanceController extends Controller
         $from = Carbon::createFromFormat('Y-m-d', $request->from_date)->format('d-M-y');
         $to = Carbon::createFromFormat('Y-m-d', $request->to_date)->format('d-M-y');
 
-
-
+        if(Attendance::where('date', $from)->exists() && Attendance::where('date', $to)->exists()){
             $distinctUsers = Attendance::select('user_id')
-            ->whereBetween('date', [$from, $to])
-            ->groupBy('user_id')
-            ->get();
+                ->whereBetween('date', [$from, $to])
+                ->groupBy('user_id')
+                ->get();
 
             $distinctUserIds = $distinctUsers->pluck('user_id');
 
@@ -88,6 +87,13 @@ class AttendanceController extends Controller
 
 
             return view('user.attendance.view-date-wise-report', compact('distinctUserIds', 'from', 'to', 'totalPresent', 'totalAbsent', 'totalLate', 'totalEarly'));
+
+
+        }else{
+            return redirect()->back()->with('attendance_report_date_miss_match', 'Your dates not mathch');
+        }
+
+
 
 
 
@@ -141,9 +147,15 @@ class AttendanceController extends Controller
         $from = Carbon::createFromFormat('Y-m-d', $request->from_date)->format('d-M-y');
         $to = Carbon::createFromFormat('Y-m-d', $request->to_date)->format('d-M-y');
 
-        $attendances = Attendance::whereBetween('date', [$from, $to])->where('late', '!=', '')->get();
+        if(Attendance::where('date', $from)->exists() && Attendance::where('date', $to)->exists()){
+            $attendances = Attendance::whereBetween('date', [$from, $to])->where('late', '!=', '')->orderBy('id', 'desc')->get();
+            return view('user.attendance.late report.view-late-report', compact('attendances', 'from', 'to'));
+        }else{
+            return redirect()->back()->with('attendance_report_date_miss_match', 'Your dates not mathch');
+        }
 
-        return view('user.attendance.late report.view-late-report', compact('attendances', 'from', 'to'));
+
+
 
     }
 }

@@ -18,6 +18,13 @@
     @include('partials.messages')
 
 
+    @if (Session::has('attendance_report_date_miss_match'))
+        <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>{{ Session('attendance_report_date_miss_match') }}</strong>
+    </div>
+    @endif
+    
     <div class="row">
         <div class="col-md-12">
             <div class="card">

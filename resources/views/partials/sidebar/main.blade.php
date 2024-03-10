@@ -42,7 +42,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('salary.info') }}">
                     <i class="fas fa-calendar"></i>
-                    <span>Salary Info</span>
+                    <span>Salary statement</span>
                 </a>
             </li>
 
